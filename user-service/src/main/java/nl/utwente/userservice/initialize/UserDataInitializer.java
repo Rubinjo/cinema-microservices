@@ -12,7 +12,7 @@ import org.springframework.stereotype.Component;
 import nl.utwente.userservice.data.UserRepository;
 import nl.utwente.userservice.domain.User;
 
-@Profile("!production")
+// @Profile("!production")
 @Component
 public class UserDataInitializer implements SmartInitializingSingleton {
 
@@ -26,29 +26,22 @@ public class UserDataInitializer implements SmartInitializingSingleton {
 
 	@Override
 	public void afterSingletonsInstantiated() {
-		User user = new User(1, "Fabian Pfaff", "fabian.pfaff@vogella.com", passwordEncoder
-			.encode("fap"),
+		User user = new User(1, "Ruben Lucas", "r.h.lucas@student.utwente.nl", passwordEncoder
+			.encode("admin"),
 				Collections
 					.singletonList("ROLE_ADMIN"),
 				Instant
 					.now(),
 				true);
-		User user2 = new User(2, "Simon Scholz", "simon.scholz@vogella.com", passwordEncoder
-			.encode("simon"),
+		User user2 = new User(2, "Bas van Tintelen", "b.f.m.vantintelen@student.utwente.nl", passwordEncoder
+			.encode("admin"),
 				Collections
 					.singletonList("ROLE_ADMIN"),
 				Instant
 					.now(),
 				false);
-		User user3 = new User(3, "Lars Vogel", "lars.vogel@vogella.com", passwordEncoder
-			.encode("vogella"),
-				Collections
-					.singletonList("ROLE_USER"),
-				Instant
-					.now(),
-				true);
 
-		userRepository.saveAll(Arrays.asList(user, user2, user3)).subscribe();
+		userRepository.saveAll(Arrays.asList(user, user2)).subscribe();
 	}
 
 }
