@@ -1,4 +1,4 @@
-package nl.utwente.routingservice.entities;
+package nl.utwente.movieservice.entities;
 
 import java.sql.Date;
 import javax.persistence.Entity;
