@@ -14,12 +14,20 @@ public class RouteConfig {
 	@Bean
 	public RouteLocator customRouteLocator(RouteLocatorBuilder builder) {
 		return builder.routes()
-				.route("user",
+				.route("users",
 						new Function<PredicateSpec, AsyncBuilder>() {
 							@Override
 							public AsyncBuilder apply(PredicateSpec r) {
-								return r.path("/user/**")
-										.uri("lb://user");
+								return r.path("/users/**")
+										.uri("lb://users");
+							}
+						})
+				.route("movies",
+						new Function<PredicateSpec, AsyncBuilder>() {
+							@Override
+							public AsyncBuilder apply(PredicateSpec r) {
+								return r.path("/movies/**")
+									.uri("lb://movies");
 							}
 						})
 				.build();

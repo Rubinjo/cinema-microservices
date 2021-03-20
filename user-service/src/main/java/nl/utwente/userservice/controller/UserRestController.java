@@ -24,7 +24,7 @@ import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 @RestController
-@RequestMapping("/user")
+@RequestMapping("/users")
 class UserRestController {
 
 	private UserService userService;

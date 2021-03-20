@@ -5,14 +5,12 @@ import java.util.Arrays;
 import java.util.Collections;
 
 import org.springframework.beans.factory.SmartInitializingSingleton;
-import org.springframework.context.annotation.Profile;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
 import nl.utwente.userservice.data.UserRepository;
 import nl.utwente.userservice.domain.User;
 
-// @Profile("!production")
 @Component
 public class UserDataInitializer implements SmartInitializingSingleton {
 
