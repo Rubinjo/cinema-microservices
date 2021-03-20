@@ -1,5 +1,5 @@
 server:
-  port: 8762
+  port: 8080
 spring:
   application:
     name: gateway
@@ -9,3 +9,16 @@ spring:
         locator:
           enabled: true
           lower-case-service-id: true
+      routes:
+        - id: users
+          uri: lb://USER
+          predicates:
+            - Path=/users/**
+        - id: movies
+          uri: lb://MOVIE
+          predicates:
+            - Path=/movies/**
+        - id: home
+          uri: lb://HOME
+          predicates:
+            - Path=/**
