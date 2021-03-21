@@ -3,22 +3,46 @@ server:
 spring:
   application:
     name: gateway
-  cloud:
-    gateway:
-      discovery:
-        locator:
-          enabled: true
-          lower-case-service-id: true
-      routes:
-        - id: users
-          uri: lb://USER
-          predicates:
-            - Path=/users/**
-        - id: movies
-          uri: lb://MOVIE
-          predicates:
-            - Path=/movies/**
-        - id: home
-          uri: lb://HOME
-          predicates:
-            - Path=/**
+
+eureka:
+  instance:
+    preferIpAddress: true
+  client:
+    registerWithEureka: true
+    fetchRegistry: true
+    serviceUrl:
+      defaultZone: ${EUREKA_URI:http://localhost:8761/eureka}
+zuul:
+  routes:
+    auth:
+      path: /authenticate/**
+      sensitiveHeaders: Cookie
+      stripPrefix: false
+    movie:
+      path: /movies/**
+      sensitiveHeaders: Cookie, Set-Cookie, Authorization
+      stripPrefix: false
+    home:
+      path: /**
+# raj.security.jwt.secret:
+#   secret
+
+# cloud:
+#   gateway:
+#     discovery:
+#       locator:
+#         enabled: true
+#         lower-case-service-id: true
+#     routes:
+#       - id: users
+#         uri: lb://USER
+#         predicates:
+#           - Path=/users/**
+#       - id: movies
+#         uri: lb://MOVIE
+#         predicates:
+#           - Path=/movies/**
+#       - id: home
+#         uri: lb://HOME
+#         predicates:
+#           - Path=/**
