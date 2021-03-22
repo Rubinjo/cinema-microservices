@@ -1,10 +1,8 @@
-package nl.utwente.authservice;
+package nl.utwente.authservice.controller;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
-
-import javax.xml.namespace.QName;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -13,8 +11,6 @@ import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.provisioning.JdbcUserDetailsManager;
-import org.springframework.security.provisioning.UserDetailsManager;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -26,7 +22,7 @@ import nl.utwente.authservice.services.MyUserDetailsService;
 import nl.utwente.authservice.util.JwtUtil;
 
 @RestController
-public class HelloResource {
+public class AuthRestController {
 
     @Autowired
     private AuthenticationManager authenticationManager;
