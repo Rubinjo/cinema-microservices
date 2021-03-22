@@ -7,6 +7,7 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -14,6 +15,7 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.io.InputStreamReader;
+
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import nl.utwente.movieservice.entities.Movie;
@@ -51,8 +53,8 @@ public class MovieRestController {
     }
 
     @PostMapping
-    public String newMovie(Movie movie, RedirectAttributes ra) {
-        String urlString = "http:localhost:8080/authenticate/account/login";
+    public ModelAndView newMovie(@CookieValue(value = "jwt") String jwt, Movie movie, Model model) {
+        String urlString = "http://localhost:8080/authenticate/check";
         
         // Manual HTTP GET request
         StringBuffer content = new StringBuffer();
@@ -62,19 +64,28 @@ public class MovieRestController {
             URL url = new URL(urlString);
             con= (HttpURLConnection) url.openConnection();
             con.setRequestMethod("GET");
+            con.setDoOutput(true);
+            con.setDoInput(true);
+            con.setUseCaches(false);
             con.setConnectTimeout(5000);
             con.setReadTimeout(5000);
-            con.setRequestProperty("Content-Type", "application/json");
-            con.setRequestProperty("Authenticate", "...............");
+            con.setRequestProperty("Authorization", "Bearer " + jwt);
 
-            // Transform the response InputStream into a String
-            BufferedReader in = new BufferedReader(
-                    new InputStreamReader(con.getInputStream()));
-            String inputLine;
-            while ((inputLine = in.readLine()) != null) {
-                content.append(inputLine);
+            // Get return
+            StringBuilder sb = new StringBuilder();  
+            BufferedReader br = new BufferedReader(
+                new InputStreamReader(con.getInputStream(), "utf-8"));
+            String line = null;  
+            while ((line = br.readLine()) != null) {  
+                sb.append(line + "\n");  
             }
-            in.close();
+            br.close();
+            String response = sb.toString();
+            response = response.substring(11, response.length() - 3);
+            if (response.equals("OK")) {
+                this.movieRepository.save(movie);
+                // ra.addAttribute("submitted", true);
+            }
         }
         catch(Exception e){
             throw new RuntimeException(e);
@@ -84,22 +95,8 @@ public class MovieRestController {
                 con.disconnect();
             }
         }
-
-        System.out.print(content);
-
-        // Transform the String to JSON with Jackson
-        // WeatherResult weatherResult;
-        // try {
-        //    weatherResult = jacksonObjectMapper.readValue(content.toString(), WeatherResult.class);
-        // }
-        // catch(Exception e){
-        //     throw new RuntimeException(e);
-        // }
-
-
-        this.movieRepository.save(movie);
-        ra.addAttribute("submitted", true);
-        return "redirect:/movies/new";
+        ModelAndView modelAndView = new ModelAndView("new_movie_form");
+        return modelAndView;
     }
 
 	@GetMapping("/{id}")

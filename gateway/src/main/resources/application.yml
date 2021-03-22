@@ -26,7 +26,7 @@ zuul:
       stripPrefix: false
     movie:
       path: /movies/**
-      sensitiveHeaders: Cookie, Set-Cookie, Authorization
+      sensitiveHeaders: Set-Cookie
       stripPrefix: false
     home:
       path: /**

@@ -40,19 +40,19 @@ public class AuthRestController {
         return response;
     }
 
-    @RequestMapping("/authenticate/account/new")
-    public Map<String, String> newAccount(@RequestBody AuthenticationRequest authenticationRequest) {
-        HashMap<String, String> response = new HashMap<>();
-        try {
-            UserDetails user = new User(authenticationRequest.getUsername(), authenticationRequest.getPassword(), new ArrayList<>());
-            // userDetailsManager.createUser(user);
-            response.put("Access", "OK");
-        } catch(Exception e) {
-            response.put("Access", "FAILED");
-        }
+    // @RequestMapping("/authenticate/account/new")
+    // public Map<String, String> newAccount(@RequestBody AuthenticationRequest authenticationRequest) {
+    //     HashMap<String, String> response = new HashMap<>();
+    //     try {
+    //         UserDetails user = new User(authenticationRequest.getUsername(), authenticationRequest.getPassword(), new ArrayList<>());
+    //         // userDetailsManager.createUser(user);
+    //         response.put("Access", "OK");
+    //     } catch(Exception e) {
+    //         response.put("Access", "FAILED");
+    //     }
         
-        return response;
-    }
+    //     return response;
+    // }
 
     @RequestMapping(value="/authenticate/account/login", method=RequestMethod.POST)
     public ResponseEntity<?> createAuthenticationToken(@RequestBody AuthenticationRequest authenticationRequest) throws Exception {

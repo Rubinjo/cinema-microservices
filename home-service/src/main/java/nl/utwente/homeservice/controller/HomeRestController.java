@@ -39,6 +39,7 @@ public class HomeRestController {
         String urlString = "http://localhost:8080/authenticate/account/login";
         HttpURLConnection con = null;
         try {
+            // Setup outgoing request
             URL url = new URL(urlString);
             con= (HttpURLConnection) url.openConnection();
             con.setRequestMethod("POST");
@@ -57,7 +58,7 @@ public class HomeRestController {
             wr.write(auth.toString());
             wr.flush();
 
-            // display what returns the POST request
+            // Get return
             StringBuilder sb = new StringBuilder();  
             BufferedReader br = new BufferedReader(
                 new InputStreamReader(con.getInputStream(), "utf-8"));
@@ -72,6 +73,7 @@ public class HomeRestController {
             Cookie cookie = new Cookie("jwt", jwt.substring(8, jwt.length() - 3));
             cookie.setMaxAge(1000 * 60 * 60 * 10);
             cookie.setHttpOnly(true);
+            cookie.setSecure(false);
             response.addCookie(cookie);
               
         }
