@@ -1,5 +1,6 @@
 package nl.utwente.authservice;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -10,8 +11,10 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.provisioning.JdbcUserDetailsManager;
+import org.springframework.security.provisioning.UserDetailsManager;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -35,13 +38,27 @@ public class HelloResource {
     private JwtUtil jwtTokenUtil;
 
     @RequestMapping("/authenticate/check")
-    public Map<String, String> hello() {
+    public Map<String, String> checkAccount() {
         HashMap<String, String> response = new HashMap<>();
         response.put("Access", "OK");
         return response;
     }
 
-    @RequestMapping(value="/authenticate", method=RequestMethod.POST)
+    @RequestMapping("/authenticate/account/new")
+    public Map<String, String> newAccount(@RequestBody AuthenticationRequest authenticationRequest) {
+        HashMap<String, String> response = new HashMap<>();
+        try {
+            UserDetails user = new User(authenticationRequest.getUsername(), authenticationRequest.getPassword(), new ArrayList<>());
+            // userDetailsManager.createUser(user);
+            response.put("Access", "OK");
+        } catch(Exception e) {
+            response.put("Access", "FAILED");
+        }
+        
+        return response;
+    }
+
+    @RequestMapping(value="/authenticate/account/login", method=RequestMethod.POST)
     public ResponseEntity<?> createAuthenticationToken(@RequestBody AuthenticationRequest authenticationRequest) throws Exception {
         try {
             authenticationManager.authenticate(
