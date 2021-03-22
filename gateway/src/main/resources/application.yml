@@ -3,6 +3,12 @@ server:
 spring:
   application:
     name: gateway
+  cloud:
+    inetutils:
+      ignoredInterfaces:
+        - docker
+      preferredNetworks:
+        - 10.0.0
 
 eureka:
   instance:
@@ -24,25 +30,5 @@ zuul:
       stripPrefix: false
     home:
       path: /**
-# raj.security.jwt.secret:
-#   secret
-
-# cloud:
-#   gateway:
-#     discovery:
-#       locator:
-#         enabled: true
-#         lower-case-service-id: true
-#     routes:
-#       - id: users
-#         uri: lb://USER
-#         predicates:
-#           - Path=/users/**
-#       - id: movies
-#         uri: lb://MOVIE
-#         predicates:
-#           - Path=/movies/**
-#       - id: home
-#         uri: lb://HOME
-#         predicates:
-#           - Path=/**
+      sensitiveHeaders: Cookie
+      stripPrefix: false

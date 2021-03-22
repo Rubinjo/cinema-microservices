@@ -1,0 +1,8 @@
+spring:
+  application:
+    name: home
+# management:
+#   security:
+#     enabled: false
+server:
+  port: 8083
