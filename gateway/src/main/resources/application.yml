@@ -32,3 +32,7 @@ zuul:
       path: /**
       sensitiveHeaders: Cookie
       stripPrefix: false
+    food:
+      path: /food/**
+      sensitiveHeaders: Set-Cookie
+      stripPrefix: false

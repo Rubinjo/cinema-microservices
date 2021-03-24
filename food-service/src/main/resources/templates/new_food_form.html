@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
   <head>
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
@@ -10,9 +10,9 @@
       integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl"
       crossorigin="anonymous"
     />
-    <title>Home</title>
+    <title>New Food</title>
   </head>
-  <body style="background-color: black">
+  <body>
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
       <div class="container-fluid" style="margin-left: 8%; margin-right: 8%">
         <a class="navbar-brand" href="/">
@@ -37,10 +37,10 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
           <ul class="navbar-nav me-auto mb-2 mb-lg-0">
             <li class="nav-item">
-              <a class="nav-link" href="/movies">Movies</a>
+              <a class="nav-link" href="/food">Food</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="/food">Menu</a>
+              <a class="nav-link" href="#">Menu</a>
             </li>
           </ul>
           <form class="d-flex">
@@ -55,42 +55,63 @@
         </div>
       </div>
     </nav>
+    <div
+      class="alert alert-success alert-dismissible fade show"
+      role="alert"
+      style="margin: auto; width: 60%; margin-top: 2%"
+      th:if="${submitted}"
+    >
+      The food has been submitted.
+      <button
+        type="button"
+        class="btn-close"
+        data-bs-dismiss="alert"
+        aria-label="Close"
+      ></button>
+    </div>
 
     <div
-      id="carouselExampleControls"
-      class="carousel slide"
-      data-ride="carousel"
-      style="max-width: 1440px; margin: auto"
+      class="card"
+      style="
+        width: 75%;
+        min-width: 360px;
+        max-width: 1280px;
+        margin: auto;
+        margin-top: 5%;
+        padding: 2rem;
+      "
     >
-      <div class="carousel-inner">
-        <div class="carousel-item active">
-          <img class="d-block w-100" src="carousel1.png" alt="First slide" />
+      <p class="fs-1 fw-bold">New Food</p>
+      <form method="POST" th:action="@{/food}" th:object="${food}">
+        <div class="mb-3">
+          <label for="nameFood" class="form-label">Name</label>
+          <input
+            type="text"
+            class="form-control"
+            id="nameFood"
+            th:field="*{name}"
+          />
         </div>
-        <div class="carousel-item">
-          <img class="d-block w-100" src="carousel2.jpg" alt="Second slide" />
+        <div class="mb-3">
+          <label for="descriptionFood" class="form-label">Description</label>
+          <input
+            type="text"
+            class="form-control"
+            id="descriptionFood"
+            th:field="*{description}"
+          />
         </div>
-        <div class="carousel-item">
-          <img class="d-block w-100" src="carousel3.jpg" alt="Third slide" />
+        <div class="mb-3">
+          <label for="releaseDate" class="form-label">Release Date</label>
+          <input
+            type="date"
+            class="form-control"
+            id="releaseDate"
+            th:field="*{releaseDate}"
+          />
         </div>
-      </div>
-      <button
-        class="carousel-control-prev"
-        type="button"
-        data-bs-target="#carouselExampleControls"
-        data-bs-slide="prev"
-      >
-        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-        <span class="visually-hidden">Previous</span>
-      </button>
-      <button
-        class="carousel-control-next"
-        type="button"
-        data-bs-target="#carouselExampleControls"
-        data-bs-slide="next"
-      >
-        <span class="carousel-control-next-icon" aria-hidden="true"></span>
-        <span class="visually-hidden">Next</span>
-      </button>
+        <button type="submit" class="btn btn-primary">Submit</button>
+      </form>
     </div>
 
     <script
