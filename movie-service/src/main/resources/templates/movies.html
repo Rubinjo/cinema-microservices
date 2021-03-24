@@ -10,10 +10,11 @@
       integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl"
       crossorigin="anonymous"
     />
-    <link rel="stylesheet" href="movies.css" />
+    <!-- Stylesheet only works on gateway -->
+    <link rel="stylesheet" type="text/css" href="movie/css/movies.css" />
     <title>Movies</title>
   </head>
-  <body style="background-color: black">
+  <body style="background-color: #0c0c0c">
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
       <div class="container-fluid" style="margin-left: 8%; margin-right: 8%">
         <a class="navbar-brand" href="/">
@@ -68,11 +69,11 @@
               height="255"
               class="pic"
             />
-            <h3 class="hide" th:text="${movie.name}"></h3>
-            <h3
-              th:text="${movie.release.before(#dates.createNow())} ? 'Out Now' : 'Not'"
-            ></h3>
-            <!-- ${#temporals.format(movie.release, 'dd-MM-yyyy')} -->
+            <h2 class="hide up" th:text="${movie.name}"></h2>
+            <h5
+              class="hide down"
+              th:text="${movie.release.before(#dates.createNow())} ? 'Out Now' : ${'Release date: ' + movie.release}"
+            ></h5>
           </a>
         </div>
       </th:block>

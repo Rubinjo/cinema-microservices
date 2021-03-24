@@ -10,16 +10,18 @@
       integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl"
       crossorigin="anonymous"
     />
+    <!-- Stylesheet only works on gateway -->
+    <link rel="stylesheet" type="text/css" href="/movie/css/newmovieform.css" />
     <title>New Movie</title>
   </head>
-  <body>
+  <body style="background-color: #0c0c0c">
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
       <div class="container-fluid" style="margin-left: 8%; margin-right: 8%">
         <a class="navbar-brand" href="/">
           <img
             style="max-height: 2em"
             class="h-100"
-            src="logo.png"
+            src="/logo.png"
             alt="Cinema"
           />
         </a>
@@ -71,46 +73,105 @@
     </div>
 
     <div
-      class="card"
+      class="card bg-dark"
       style="
         width: 75%;
         min-width: 360px;
         max-width: 1280px;
         margin: auto;
         margin-top: 5%;
+        margin-bottom: 5%;
         padding: 2rem;
       "
     >
       <p class="fs-1 fw-bold">New Movie</p>
       <form method="POST" th:action="@{/movies}" th:object="${movie}">
         <div class="mb-3">
-          <label for="nameMovie" class="form-label">Name</label>
+          <label for="nameMovie" class="form-label">Name*</label>
           <input
             type="text"
             class="form-control"
             id="nameMovie"
             th:field="*{name}"
+            required
           />
         </div>
         <div class="mb-3">
-          <label for="descriptionMovie" class="form-label">Description</label>
+          <label for="descriptionMovie" class="form-label">Description*</label>
           <input
             type="text"
             class="form-control"
             id="descriptionMovie"
             th:field="*{description}"
+            required
           />
         </div>
         <div class="mb-3">
-          <label for="releaseDate" class="form-label">Release Date</label>
+          <label for="imageUrl" class="form-label">Image url*</label>
+          <input
+            type="url"
+            class="form-control"
+            id="imageUrl"
+            th:field="*{image}"
+            required
+          />
+        </div>
+        <div class="mb-3">
+          <label for="trailerUrl" class="form-label">Trailer url</label>
+          <input
+            type="url"
+            class="form-control"
+            id="trailerUrl"
+            th:field="*{trailer}"
+          />
+        </div>
+        <div class="mb-3">
+          <label for="duration" class="form-label">Duration</label>
+          <input
+            type="number"
+            class="form-control"
+            id="duration"
+            th:field="*{duration}"
+          />
+        </div>
+        <div class="mb-3">
+          <label for="genre" class="form-label">Genre(s)</label>
+          <input
+            type="text"
+            class="form-control"
+            id="genre"
+            th:field="*{genre}"
+          />
+        </div>
+        <div class="mb-3">
+          <label for="actors" class="form-label">Actors(s)</label>
+          <input
+            type="text"
+            class="form-control"
+            id="actors"
+            th:field="*{actors}"
+          />
+        </div>
+        <div class="mb-3">
+          <label for="directors" class="form-label">Director(s)</label>
+          <input
+            type="text"
+            class="form-control"
+            id="directors"
+            th:field="*{director}"
+          />
+        </div>
+        <div class="mb-3">
+          <label for="releaseDate" class="form-label">Release Date*</label>
           <input
             type="date"
             class="form-control"
             id="releaseDate"
-            th:field="*{releaseDate}"
+            th:field="*{release}"
+            required
           />
         </div>
-        <button type="submit" class="btn btn-primary">Submit</button>
+        <button type="submit" class="btn btn-warning">Submit</button>
       </form>
     </div>
 
