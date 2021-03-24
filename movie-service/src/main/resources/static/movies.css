@@ -1,0 +1,21 @@
+.hide {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  opacity: 0;
+  transition: 0.4s ease;
+  pointer-events: none;
+  color: white;
+}
+
+.pic:hover {
+  transform: scale(1.1);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.12), 0 4px 8px rgba(0, 0, 0, 0.06);
+  filter: brightness(50%);
+  transition: 0.4s ease;
+}
+
+.pic:hover + .hide {
+  opacity: 1;
+}

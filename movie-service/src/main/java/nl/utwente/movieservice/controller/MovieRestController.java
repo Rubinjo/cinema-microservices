@@ -5,10 +5,12 @@ import org.springframework.web.bind.annotation.RestController;
 import java.io.BufferedReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.time.LocalDate;
 
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.servlet.ModelAndView;
@@ -17,6 +19,8 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import java.io.InputStreamReader;
 
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import nl.utwente.movieservice.entities.Movie;
 import nl.utwente.movieservice.repositories.MovieRepository;
@@ -31,17 +35,15 @@ public class MovieRestController {
         this.movieRepository = movieRepository;
     }
 
-    // @GetMapping("/")
-    // public ModelAndView showHomepage() {
-    //     ModelAndView modelAndView = new ModelAndView("home");
-    //     return modelAndView;
-    // }
-
     @GetMapping
-    public ModelAndView showMovies(Model model) {
-		// Call search microservice
-        ModelAndView modelAndView = new ModelAndView("movies");
-		model.addAttribute("movie", this.movieRepository.findAll());
+    public ModelAndView showMovies(@RequestParam(value = "q", required = false) String q, Model model) {
+		ModelAndView modelAndView = new ModelAndView("movies");
+        if (q == null || q.isEmpty()) {
+            model.addAttribute("movie", this.movieRepository.findAll());
+        } else {
+            model.addAttribute("movie", this.movieRepository.findByNameContainingIgnoreCase(q));
+        }
+        // model.addAttribute("date", LocalDate.now());
         return modelAndView;
     }
 
@@ -100,10 +102,10 @@ public class MovieRestController {
     }
 
 	@GetMapping("/{id}")
-    public String showMovie() {
-		// Call search microservice
-        // model.addAttribute("movie", this.movieRepository.findAllByName());
-        return "Not finished";
+    public ModelAndView showMovie(@PathVariable Long id, Model model) {
+		ModelAndView modelAndView = new ModelAndView("movie");
+        model.addAttribute("movie", this.movieRepository.findById(id));
+        return modelAndView;
     }
 
 	@PutMapping("/{id}")

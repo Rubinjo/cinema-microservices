@@ -20,7 +20,11 @@ public class Movie {
     private long id;
     private String name;
     private String description;
-    private Date releaseDate;
+    private String image;
+    private String trailer;
     private Integer duration;
     private String genre;
+    private String actors;
+    private String director;
+    private Date release;
 }
