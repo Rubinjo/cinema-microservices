@@ -48,16 +48,20 @@ public class MovieRestController {
         } else {
             model.addAttribute("movie", this.movieRepository.findByNameContainingIgnoreCaseOrderByReleaseAsc(q));
         }
-        if (!jwt.isEmpty() && checkLogin(jwt)) {
+        // Add attribute if logged in
+        if (jwt != null && checkLogin(jwt)) {
             model.addAttribute("login", true);
         }
         return modelAndView;
     }
 
 	@GetMapping("/new")
-    public ModelAndView newMovieForm(Model model) {
+    public ModelAndView newMovieForm(@CookieValue(value = "jwt", required = false) String jwt, Model model) {
         ModelAndView modelAndView = new ModelAndView("new_movie_form");
         model.addAttribute("movie", new Movie());
+        if (jwt != null && checkLogin(jwt)) {
+            model.addAttribute("login", true);
+        }
         return modelAndView;
     }
 
@@ -78,7 +82,7 @@ public class MovieRestController {
     }
 
 	@GetMapping("/{id}")
-    public ModelAndView showMovie(@PathVariable Long id, Model model) {
+    public ModelAndView showMovie(@CookieValue(value = "jwt") String jwt, @PathVariable Long id, Model model) {
         // Check if movie exists
         Optional <Movie> potMovie = this.movieRepository.findById(id);
         if (!potMovie.isPresent()) {
@@ -86,6 +90,10 @@ public class MovieRestController {
         }
         Movie movie = potMovie.get();
         model.addAttribute("movie", movie);
+        // Add attribute if logged in
+        if (jwt != null && checkLogin(jwt)) {
+            model.addAttribute("login", true);
+        }
         ModelAndView modelAndView = new ModelAndView("movie");
         return modelAndView;
     }
