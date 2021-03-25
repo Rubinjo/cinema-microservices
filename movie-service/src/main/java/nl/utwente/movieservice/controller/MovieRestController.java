@@ -11,6 +11,7 @@ import java.util.Optional;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.CookieValue;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -40,23 +41,27 @@ public class MovieRestController {
     }
 
     @GetMapping
-    public ModelAndView showMovies(@RequestParam(value = "q", required = false) String q, Model model) {
+    public ModelAndView showMovies(@CookieValue(value = "jwt", required = false) String jwt, @RequestParam(value = "q", required = false) String q, Model model) {
 		ModelAndView modelAndView = new ModelAndView("movies");
         if (q == null || q.isEmpty()) {
             model.addAttribute("movie", this.movieRepository.findAllByOrderByReleaseAsc());
         } else {
             model.addAttribute("movie", this.movieRepository.findByNameContainingIgnoreCaseOrderByReleaseAsc(q));
         }
+        if (!jwt.isEmpty() && checkLogin(jwt)) {
+            model.addAttribute("login", true);
+        }
         return modelAndView;
     }
 
 	@GetMapping("/new")
-    public ModelAndView newMovie(Model model) {
+    public ModelAndView newMovieForm(Model model) {
         ModelAndView modelAndView = new ModelAndView("new_movie_form");
         model.addAttribute("movie", new Movie());
         return modelAndView;
     }
 
+    //Redirect not working
     @PostMapping
     public RedirectView newMovie(@CookieValue(value = "jwt") String jwt, Movie movie, RedirectAttributes attributes) {
         // Check required fields server side
@@ -85,9 +90,35 @@ public class MovieRestController {
         return modelAndView;
     }
 
+    //Redirect not working
 	@PutMapping("/{id}")
-	public String reserveMovie() {
-		return "Not finished";
+	public String editMovie(@CookieValue(value = "jwt") String jwt, @PathVariable Long id, Movie movie) {
+		// Check if movie exists
+        // Check if authorized
+        Optional <Movie> potMovie = this.movieRepository.findById(id);
+        if (!potMovie.isPresent() || checkLogin(jwt) == false || movie.getId() != potMovie.get().getId()) {
+            // Redirect to all movies page
+        }
+        // Automatically overwrites movie with same id
+        this.movieRepository.save(movie);
+
+        return "Not finished";
+	}
+
+    //Redirect not working
+	@DeleteMapping("/{id}")
+	public String deleteMovie(@CookieValue(value = "jwt") String jwt, @PathVariable Long id) {
+		// Check if movie exists
+        // Check if authorized
+        Optional <Movie> potMovie = this.movieRepository.findById(id);
+        if (!potMovie.isPresent() || checkLogin(jwt) == false) {
+            // Redirect to all movies page
+        }
+        Movie movie = potMovie.get();
+
+        this.movieRepository.delete(movie);
+
+        return "Not finished";
 	}
 
     public boolean checkLogin(String jwt) {

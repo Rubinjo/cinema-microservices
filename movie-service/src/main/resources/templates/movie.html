@@ -10,6 +10,8 @@
       integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl"
       crossorigin="anonymous"
     />
+    <!-- Stylesheet only works on gateway -->
+    <link rel="stylesheet" type="text/css" href="/movie/css/newmovieform.css" />
     <title>Movie</title>
   </head>
   <body style="background-color: #0c0c0c">
@@ -17,7 +19,7 @@
       <div class="container-fluid" style="margin-left: 8%; margin-right: 8%">
         <a class="navbar-brand" href="/">
           <img
-            style="max-height: 2em"
+            style="max-height: 2.5rem"
             class="h-100"
             src="/logo.png"
             alt="Cinema"
@@ -56,7 +58,7 @@
       </div>
     </nav>
     <div
-      th:if="${movie.trailer != null}"
+      th:if="${movie.trailer != null and movie.trailer != ''}"
       style="width: 100%; background-color: black"
     >
       <iframe
@@ -67,11 +69,56 @@
       >
       </iframe>
     </div>
-    <div class="container">
+    <div class="container-fluid m-0">
       <div class="row">
-        <div class="col-sm bg-dark">One of three columns</div>
-        <div class="col-lg">One of three columns</div>
-        <div class="col-sm bg-dark">One of three columns</div>
+        <div
+          style="
+            text-align: center;
+            padding-top: 4%;
+            padding-bottom: 4%;
+            min-height: 34.6rem;
+          "
+          class="col-3 bg-dark"
+        >
+          <img th:src="${movie.image}" width="172.5" height="255" />
+        </div>
+        <div class="col-6 py-2 px-4">
+          <h1 class="display-4 pb-3" th:text="${movie.name}">Movie</h1>
+          <p th:text="${movie.description}">
+            Reserve your tickets now to see this awesome movie!
+          </p>
+          <div class="p-3">
+            <button
+              type="button"
+              class="btn btn-warning btn-lg fw-bold float-end"
+              style="color: white"
+            >
+              Reserve Ticket
+            </button>
+          </div>
+        </div>
+        <div style="min-height: 34.6rem" class="col-3 bg-dark py-5">
+          <div th:if="${movie.director != null and movie.director != ''}">
+            <p class="fw-bold m-0">Director(s)</p>
+            <p th:text="${movie.director}"></p>
+          </div>
+          <div th:if="${movie.actors != null and movie.actors != ''}">
+            <p class="fw-bold m-0">Cast</p>
+            <p th:text="${movie.actors}"></p>
+          </div>
+          <div th:if="${movie.duration != null and movie.duration != ''}">
+            <p class="fw-bold m-0">Duration</p>
+            <p th:text="${movie.duration + ' minutes'}"></p>
+          </div>
+          <div th:if="${movie.genre != null and movie.genre != ''}">
+            <p class="fw-bold m-0">Genre</p>
+            <p th:text="${movie.genre}"></p>
+          </div>
+          <div th:if="${movie.release != null and movie.release != ''}">
+            <p class="fw-bold m-0">Release Date</p>
+            <p th:text="${movie.release}"></p>
+          </div>
+        </div>
       </div>
     </div>
   </body>
