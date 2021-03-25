@@ -6,15 +6,19 @@ import java.io.BufferedReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.time.LocalDate;
+import java.util.Optional;
 
 import org.springframework.ui.Model;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import org.springframework.web.servlet.view.RedirectView;
 
 import java.io.InputStreamReader;
 
@@ -39,11 +43,10 @@ public class MovieRestController {
     public ModelAndView showMovies(@RequestParam(value = "q", required = false) String q, Model model) {
 		ModelAndView modelAndView = new ModelAndView("movies");
         if (q == null || q.isEmpty()) {
-            model.addAttribute("movie", this.movieRepository.findAll());
+            model.addAttribute("movie", this.movieRepository.findAllByOrderByReleaseAsc());
         } else {
-            model.addAttribute("movie", this.movieRepository.findByNameContainingIgnoreCase(q));
+            model.addAttribute("movie", this.movieRepository.findByNameContainingIgnoreCaseOrderByReleaseAsc(q));
         }
-        // model.addAttribute("date", LocalDate.now());
         return modelAndView;
     }
 
@@ -55,11 +58,42 @@ public class MovieRestController {
     }
 
     @PostMapping
-    public ModelAndView newMovie(@CookieValue(value = "jwt") String jwt, Movie movie, Model model) {
+    public RedirectView newMovie(@CookieValue(value = "jwt") String jwt, Movie movie, RedirectAttributes attributes) {
+        // Check required fields server side
+        // Check if authorized
+        if (movie.getName() == null || movie.getDescription() == null || movie.getImage() == null || movie.getRelease() == null || checkLogin(jwt) == false) {
+            attributes.addAttribute("submitted", false);
+            return new RedirectView("movies/new");
+        }
+        // Save movie
+        this.movieRepository.save(movie);
+
+        attributes.addAttribute("submitted", true);
+        return new RedirectView("movies/new");
+    }
+
+	@GetMapping("/{id}")
+    public ModelAndView showMovie(@PathVariable Long id, Model model) {
+        // Check if movie exists
+        Optional <Movie> potMovie = this.movieRepository.findById(id);
+        if (!potMovie.isPresent()) {
+            // Redirect to all movies page
+        }
+        Movie movie = potMovie.get();
+        model.addAttribute("movie", movie);
+        ModelAndView modelAndView = new ModelAndView("movie");
+        return modelAndView;
+    }
+
+	@PutMapping("/{id}")
+	public String reserveMovie() {
+		return "Not finished";
+	}
+
+    public boolean checkLogin(String jwt) {
         String urlString = "http://localhost:8080/authenticate/check";
-        
+        String response = "";
         // Manual HTTP GET request
-        StringBuffer content = new StringBuffer();
         HttpURLConnection con = null;
         try {
             // Build HTTP request
@@ -82,12 +116,8 @@ public class MovieRestController {
                 sb.append(line + "\n");  
             }
             br.close();
-            String response = sb.toString();
+            response = sb.toString();
             response = response.substring(11, response.length() - 3);
-            if (response.equals("OK")) {
-                this.movieRepository.save(movie);
-                // ra.addAttribute("submitted", true);
-            }
         }
         catch(Exception e){
             throw new RuntimeException(e);
@@ -97,19 +127,10 @@ public class MovieRestController {
                 con.disconnect();
             }
         }
-        ModelAndView modelAndView = new ModelAndView("new_movie_form");
-        return modelAndView;
+        if (response.equals("OK")) {
+            return true;
+        } else {
+            return false;
+        }
     }
-
-	@GetMapping("/{id}")
-    public ModelAndView showMovie(@PathVariable Long id, Model model) {
-		ModelAndView modelAndView = new ModelAndView("movie");
-        model.addAttribute("movie", this.movieRepository.findById(id));
-        return modelAndView;
-    }
-
-	@PutMapping("/{id}")
-	public String reserveMovie() {
-		return "Not finished";
-	}
 }

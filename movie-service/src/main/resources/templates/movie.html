@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
   <head>
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
@@ -12,7 +12,67 @@
     />
     <title>Movie</title>
   </head>
-  <body>
-    <h1>Test</h1>
+  <body style="background-color: #0c0c0c">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+      <div class="container-fluid" style="margin-left: 8%; margin-right: 8%">
+        <a class="navbar-brand" href="/">
+          <img
+            style="max-height: 2em"
+            class="h-100"
+            src="/logo.png"
+            alt="Cinema"
+          />
+        </a>
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#navbarSupportedContent"
+          aria-controls="navbarSupportedContent"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+            <li class="nav-item">
+              <a class="nav-link active" href="/movies">Movies</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#">Menu</a>
+            </li>
+          </ul>
+          <form class="d-flex" action="/movies" method="GET">
+            <input
+              class="form-control me-2"
+              type="search"
+              name="q"
+              placeholder="Search for Movie"
+            />
+            <button class="btn btn-outline-light" type="submit">Search</button>
+          </form>
+        </div>
+      </div>
+    </nav>
+    <div
+      th:if="${movie.trailer != null}"
+      style="width: 100%; background-color: black"
+    >
+      <iframe
+        style="margin: 0 auto; display: block"
+        width="420"
+        height="345"
+        th:src="${movie.trailer} + '?autoplay=1&mute=1'"
+      >
+      </iframe>
+    </div>
+    <div class="container">
+      <div class="row">
+        <div class="col-sm bg-dark">One of three columns</div>
+        <div class="col-lg">One of three columns</div>
+        <div class="col-sm bg-dark">One of three columns</div>
+      </div>
+    </div>
   </body>
 </html>
