@@ -11,7 +11,7 @@
       crossorigin="anonymous"
     />
     <!-- Stylesheet only works on gateway -->
-    <link rel="stylesheet" type="text/css" href="/movie/css/newmovieform.css" />
+    <link rel="stylesheet" type="text/css" href="/movie/css/color.css" />
     <title>Movie</title>
   </head>
   <body style="background-color: #0c0c0c">
@@ -42,7 +42,7 @@
               <a class="nav-link active" href="/movies">Movies</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="#">Menu</a>
+              <a class="nav-link" href="/food">Menu</a>
             </li>
           </ul>
           <form class="d-flex" action="/movies" method="GET">
@@ -69,7 +69,15 @@
                 class="dropdown-menu"
                 aria-labelledby="navbarDropdownMenuLink"
               >
-                <li><a class="dropdown-item" href="#">Logout</a></li>
+                <li>
+                  <a
+                    onclick="document.getElementById('logout-form').submit();"
+                    class="dropdown-item"
+                    style="cursor: pointer"
+                    >Logout</a
+                  >
+                  <form id="logout-form" action="/logout" method="POST"></form>
+                </li>
               </ul>
             </li>
           </ul>
@@ -140,5 +148,10 @@
         </div>
       </div>
     </div>
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0"
+      crossorigin="anonymous"
+    ></script>
   </body>
 </html>

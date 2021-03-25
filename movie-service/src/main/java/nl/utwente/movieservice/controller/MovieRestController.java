@@ -129,7 +129,7 @@ public class MovieRestController {
         return "Not finished";
 	}
 
-    public boolean checkLogin(String jwt) {
+    private boolean checkLogin(String jwt) {
         String urlString = "http://localhost:8080/authenticate/check";
         String response = "";
         // Manual HTTP GET request

@@ -11,7 +11,7 @@
       crossorigin="anonymous"
     />
     <!-- Stylesheet only works on gateway -->
-    <link rel="stylesheet" type="text/css" href="/movie/css/newmovieform.css" />
+    <link rel="stylesheet" type="text/css" href="/movie/css/color.css" />
     <title>New Movie</title>
   </head>
   <body style="background-color: #0c0c0c">
@@ -69,7 +69,15 @@
                 class="dropdown-menu"
                 aria-labelledby="navbarDropdownMenuLink"
               >
-                <li><a class="dropdown-item" href="#">Logout</a></li>
+                <li>
+                  <a
+                    onclick="document.getElementById('logout-form').submit();"
+                    class="dropdown-item"
+                    style="cursor: pointer"
+                    >Logout</a
+                  >
+                  <form id="logout-form" action="/logout" method="POST"></form>
+                </li>
               </ul>
             </li>
           </ul>

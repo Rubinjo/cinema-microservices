@@ -26,13 +26,13 @@ zuul:
       stripPrefix: false
     movie:
       path: /movies/**
-      sensitiveHeaders: Set-Cookie
+      sensitiveHeaders: Set-Cookie, Authorization
       stripPrefix: false
     home:
       path: /**
-      sensitiveHeaders: Cookie
+      sensitiveHeaders: Authorization
       stripPrefix: false
     food:
       path: /food/**
-      sensitiveHeaders: Set-Cookie
+      sensitiveHeaders: Set-Cookie, Authorization
       stripPrefix: false
