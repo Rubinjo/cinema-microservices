@@ -54,6 +54,25 @@
             />
             <button class="btn btn-outline-light" type="submit">Search</button>
           </form>
+          <ul th:if="${login}" class="navbar-nav mb-2 mb-lg-0 ps-4">
+            <li class="nav-item dropdown">
+              <a
+                class="nav-link dropdown-toggle"
+                id="navbarDropdownMenuLink"
+                role="button"
+                data-bs-toggle="dropdown"
+                aria-expanded="false"
+              >
+                Admin
+              </a>
+              <ul
+                class="dropdown-menu"
+                aria-labelledby="navbarDropdownMenuLink"
+              >
+                <li><a class="dropdown-item" href="#">Logout</a></li>
+              </ul>
+            </li>
+          </ul>
         </div>
       </div>
     </nav>
