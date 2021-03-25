@@ -38,10 +38,10 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
           <ul class="navbar-nav me-auto mb-2 mb-lg-0">
             <li class="nav-item">
-              <a class="nav-link active" href="/food">Food</a>
+              <a class="nav-link active" href="/movies">Movies</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="#">Menu</a>
+              <a class="nav-link" href="/food">Menu</a>
             </li>
           </ul>
           <form class="d-flex" action="/food" method="GET">
@@ -57,10 +57,23 @@
       </div>
     </nav>
 
+    <div style="text-align:center"></divstyle>
+      <h1
+        style="color: darkred;"
+        th:text="Menu"
+      ></h1>
+    </div>
+
+    <div style="text-align:center"></divstyle>
+      <h2
+        style="color: darkred;"
+        th:text="Popcorn"
+      ></h2>
+    </div>
+
     <div style="text-align: center">
       <th:block th:each="food : ${food}">
         <div style="padding: 2rem; display: inline-block; position: relative">
-          <a th:href="@{/food/{id}(id=${food.id})}">
             <img
               th:src="${food.image}"
               th:alt="${food.name}"
@@ -68,12 +81,15 @@
               height="255"
               class="pic"
             />
-            <h3 class="hide" th:text="${food.name}"></h3>
-            <!-- <h3
-              th:text="${food.release.before(#dates.createNow())} ? 'Out Now' : 'Not'"
-            ></h3> -->
-            <!-- ${#temporals.format(food.release, 'dd-MM-yyyy')} -->
-          </a>
+            <!-- <h3 class="hide" th:text="${food.description}"></h3> -->
+            <h3
+              style="color: darkred;"
+              th:text="${food.name}"
+            ></h3>
+            <h3
+              style="color: darkred;"
+              th:text="€ + ${food.price}"
+            ></h3>
         </div>
       </th:block>
     </div>
