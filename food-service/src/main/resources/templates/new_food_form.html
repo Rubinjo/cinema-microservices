@@ -10,7 +10,7 @@
       integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl"
       crossorigin="anonymous"
     />
-    <link rel="stylesheet" type="text/css" hfref="css/newfoodform.css"/>
+    <link rel="stylesheet" type="text/css" hfref="css/newfoodform.css" />
     <title>New Food</title>
   </head>
   <body style="background-color: #0c0c0c">
@@ -91,7 +91,7 @@
     </div>
 
     <div
-      class="card"
+      class="card bg-dark"
       style="
         width: 75%;
         min-width: 360px;
@@ -102,9 +102,9 @@
       "
     >
       <p class="fs-1 fw-bold">New Food</p>
-      <form method="POST" th:action="@{/food}" th:object="${food}">
+      <form method="POST" action="/food" th:object="${food}">
         <div class="mb-3">
-          <label for="nameFood" class="form-label">Name</label>
+          <label for="nameFood" class="form-label">Name*</label>
           <input
             type="text"
             class="form-control"
@@ -114,7 +114,7 @@
           />
         </div>
         <div class="mb-3">
-          <label for="descriptionFood" class="form-label">Description</label>
+          <label for="descriptionFood" class="form-label">Description*</label>
           <input
             type="text"
             class="form-control"
@@ -124,7 +124,7 @@
           />
         </div>
         <div class="mb-3">
-          <label for="imageUrl" class="form-label">Image url</label>
+          <label for="imageUrl" class="form-label">Image url*</label>
           <input
             type="url"
             class="form-control"
@@ -134,9 +134,9 @@
           />
         </div>
         <div class="mb-3">
-          <label for="foodPrice" class="form-label">Food price</label>
+          <label for="foodPrice" class="form-label">Food price*</label>
           <input
-            type="price"
+            type="text"
             class="form-control"
             id="foodPrice"
             th:field="*{price}"
@@ -144,14 +144,20 @@
           />
         </div>
         <div class="mb-3">
-          <select class="form-select" aria-label="Select food type">
-            <option selected>Select food type</option>
+          <label for="foodType" class="form-label">Food Type*</label>
+          <select
+            id="foodType"
+            class="form-select"
+            aria-label="Select food type"
+            th:field="*{type}"
+            required
+          >
             <option value="Popcorn">Popcorn</option>
             <option value="Drink">Drink</option>
             <option value="Beer">Beer</option>
           </select>
         </div>
-        <button type="submit" class="btn btn-primary">Submit</button>
+        <button type="submit" class="btn btn-warning">Submit</button>
       </form>
     </div>
 

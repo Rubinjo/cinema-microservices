@@ -112,7 +112,7 @@
       "
     >
       <p class="fs-1 fw-bold">New Movie</p>
-      <form method="POST" th:action="@{/movies}" th:object="${movie}">
+      <form method="POST" action="/movies" th:object="${movie}">
         <div class="mb-3">
           <label for="nameMovie" class="form-label">Name*</label>
           <input

@@ -36,30 +36,45 @@ public class FoodRestController {
     }
 
     @GetMapping
-    public ModelAndView showFood(@RequestParam(value = "q", required = false) String q, Model model) {
+    public ModelAndView showFood(@CookieValue(value = "jwt", required = false) String jwt, Model model) {
 		ModelAndView modelAndView = new ModelAndView("food");
-        if (q == null || q.isEmpty()) {
-            model.addAttribute("food", this.foodRepository.findAll());
-        } else {
-            model.addAttribute("food", this.foodRepository.findByNameContainingIgnoreCase(q));
+        model.addAttribute("food", this.foodRepository.findAll());
+        // Add attribute if logged in
+        if (jwt != null && checkLogin(jwt)) {
+            model.addAttribute("login", true);
         }
-        // model.addAttribute("date", LocalDate.now());
         return modelAndView;
     }
 
 	@GetMapping("/new")
-    public ModelAndView newFood(Model model) {
+    public ModelAndView newFood(@CookieValue(value = "jwt", required = false) String jwt, Model model) {
         ModelAndView modelAndView = new ModelAndView("new_food_form");
         model.addAttribute("food", new Food());
+        // Add attribute if logged in
+        if (jwt != null && checkLogin(jwt)) {
+            model.addAttribute("login", true);
+        }
         return modelAndView;
     }
 
     @PostMapping
     public ModelAndView newFood(@CookieValue(value = "jwt") String jwt, Food food, Model model) {
-        String urlString = "http://localhost:8080/authenticate/check";
+        // Check required fields server side
+        // Check if authorized
+        if (food.getName() == null || food.getDescription() == null || food.getImage() == null || food.getPrice() == null || food.getType() == null || checkLogin(jwt) == false) {
+            // Needs to be added
+        }
+        // Save food
+        this.foodRepository.save(food);
         
+        ModelAndView modelAndView = new ModelAndView("new_food_form");
+        return modelAndView;
+    }
+
+    private boolean checkLogin(String jwt) {
+        String urlString = "http://localhost:8080/authenticate/check";
+        String response = "";
         // Manual HTTP GET request
-        StringBuffer content = new StringBuffer();
         HttpURLConnection con = null;
         try {
             // Build HTTP request
@@ -82,12 +97,8 @@ public class FoodRestController {
                 sb.append(line + "\n");  
             }
             br.close();
-            String response = sb.toString();
+            response = sb.toString();
             response = response.substring(11, response.length() - 3);
-            if (response.equals("OK")) {
-                this.foodRepository.save(food);
-                // ra.addAttribute("submitted", true);
-            }
         }
         catch(Exception e){
             throw new RuntimeException(e);
@@ -97,7 +108,10 @@ public class FoodRestController {
                 con.disconnect();
             }
         }
-        ModelAndView modelAndView = new ModelAndView("new_food_form");
-        return modelAndView;
+        if (response.equals("OK")) {
+            return true;
+        } else {
+            return false;
+        }
     }
 }

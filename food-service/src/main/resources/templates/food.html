@@ -53,6 +53,33 @@
             />
             <button class="btn btn-outline-light" type="submit">Search</button>
           </form>
+          <ul th:if="${login}" class="navbar-nav mb-2 mb-lg-0 ps-4">
+            <li class="nav-item dropdown">
+              <a
+                class="nav-link dropdown-toggle"
+                id="navbarDropdownMenuLink"
+                role="button"
+                data-bs-toggle="dropdown"
+                aria-expanded="false"
+              >
+                Admin
+              </a>
+              <ul
+                class="dropdown-menu"
+                aria-labelledby="navbarDropdownMenuLink"
+              >
+                <li>
+                  <a
+                    onclick="document.getElementById('logout-form').submit();"
+                    class="dropdown-item"
+                    style="cursor: pointer"
+                    >Logout</a
+                  >
+                  <form id="logout-form" action="/logout" method="POST"></form>
+                </li>
+              </ul>
+            </li>
+          </ul>
         </div>
       </div>
     </nav>
@@ -89,7 +116,7 @@
               ></h3>
               <h3
                 style="color: darkred;"
-                th:text="€ + ${food.price}"
+                th:text="€ + ${#numbers.formatDecimal(food.price, 0, 'COMMA', 2, 'POINT')}"
               ></h3>
           </div>
       </span>

@@ -59,6 +59,7 @@ public class MovieRestController {
     public ModelAndView newMovieForm(@CookieValue(value = "jwt", required = false) String jwt, Model model) {
         ModelAndView modelAndView = new ModelAndView("new_movie_form");
         model.addAttribute("movie", new Movie());
+        // Add attribute if logged in
         if (jwt != null && checkLogin(jwt)) {
             model.addAttribute("login", true);
         }
