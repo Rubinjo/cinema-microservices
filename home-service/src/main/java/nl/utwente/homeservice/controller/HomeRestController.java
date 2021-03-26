@@ -77,7 +77,7 @@ public class HomeRestController {
             // System.out.println(jwt);
             // System.out.println(jwt.substring(8, jwt.length() - 3));
             Cookie cookie = new Cookie("jwt", jwt.substring(8, jwt.length() - 3));
-            cookie.setMaxAge(1000 * 60 * 60 * 10);
+            cookie.setMaxAge(60 * 60 * 10);
             cookie.setHttpOnly(true);
             cookie.setSecure(false);
             response.addCookie(cookie);
