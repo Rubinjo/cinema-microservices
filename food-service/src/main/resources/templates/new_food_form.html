@@ -10,9 +10,10 @@
       integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl"
       crossorigin="anonymous"
     />
+    <link rel="stylesheet" type="text/css" hfref="css/newfoodform.css"/>
     <title>New Food</title>
   </head>
-  <body>
+  <body style="background-color: #0c0c0c">
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
       <div class="container-fluid" style="margin-left: 8%; margin-right: 8%">
         <a class="navbar-brand" href="/">
@@ -37,10 +38,10 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
           <ul class="navbar-nav me-auto mb-2 mb-lg-0">
             <li class="nav-item">
-              <a class="nav-link" href="/food">Food</a>
+              <a class="nav-link" href="/movies">movies</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="#">Menu</a>
+              <a class="nav-link" href="/food">Menu</a>
             </li>
           </ul>
           <form class="d-flex">
@@ -52,6 +53,25 @@
             />
             <button class="btn btn-outline-light" type="submit">Search</button>
           </form>
+          <ul th:if="${login}" class="navbar-nav mb-2 mb-lg-0 ps-4">
+            <li class="nav-item dropdown">
+              <a
+                class="nav-link dropdown-toggle"
+                id="navbarDropdownMenuLink"
+                role="button"
+                data-bs-toggle="dropdown"
+                aria-expanded="false"
+              >
+                Admin
+              </a>
+              <ul
+                class="dropdown-menu"
+                aria-labelledby="navbarDropdownMenuLink"
+              >
+                <li><a class="dropdown-item" href="#">Logout</a></li>
+              </ul>
+            </li>
+          </ul>
         </div>
       </div>
     </nav>
@@ -90,6 +110,7 @@
             class="form-control"
             id="nameFood"
             th:field="*{name}"
+            required
           />
         </div>
         <div class="mb-3">
@@ -99,7 +120,36 @@
             class="form-control"
             id="descriptionFood"
             th:field="*{description}"
+            required
           />
+        </div>
+        <div class="mb-3">
+          <label for="imageUrl" class="form-label">Image url</label>
+          <input
+            type="url"
+            class="form-control"
+            id="imageUrl"
+            th:field="*{image}"
+            required
+          />
+        </div>
+        <div class="mb-3">
+          <label for="foodPrice" class="form-label">Food price</label>
+          <input
+            type="price"
+            class="form-control"
+            id="foodPrice"
+            th:field="*{price}"
+            required
+          />
+        </div>
+        <div class="mb-3">
+          <select class="form-select" aria-label="Select food type">
+            <option selected>Select food type</option>
+            <option value="Popcorn">Popcorn</option>
+            <option value="Drink">Drink</option>
+            <option value="Beer">Beer</option>
+          </select>
         </div>
         <button type="submit" class="btn btn-primary">Submit</button>
       </form>

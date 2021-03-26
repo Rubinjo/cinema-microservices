@@ -10,7 +10,7 @@
       integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl"
       crossorigin="anonymous"
     />
-    <link rel="stylesheet" type="text/css" href="food/css/bier.css" />
+    <link rel="stylesheet" type="text/css" href="css/food.css" />
     <title>Food & Drinks</title>
   </head>
   <body style="background-color: #0c0c0c">
@@ -73,24 +73,90 @@
 
     <div style="text-align: center">
       <th:block th:each="food : ${food}">
-        <div style="padding: 2rem; display: inline-block; position: relative">
-            <img
-              th:src="${food.image}"
-              th:alt="${food.name}"
-              width="172.5"
-              height="255"
-              class="pic"
-            />
-            <h3 class="hide" th:text="${food.description}"></h3>
-            <h3
-              style="color: darkred;"
-              th:text="${food.name}"
-            ></h3>
-            <h3
-              style="color: darkred;"
-              th:text="€ + ${food.price}"
-            ></h3>
-        </div>
+        <span th:if="${food.type == 'Popcorn'}">
+          <div style="padding: 2rem; display: inline-block; position: relative">
+              <img
+                th:src="${food.image}"
+                th:alt="${food.name}"
+                width="172.5"
+                height="255"
+                class="pic"
+              />
+              <h3 class="hide" th:text="${food.description}"></h3>
+              <h3
+                style="color: darkred;"
+                th:text="${food.name}"
+              ></h3>
+              <h3
+                style="color: darkred;"
+                th:text="€ + ${food.price}"
+              ></h3>
+          </div>
+      </span>
+      </th:block>
+    </div>
+
+    <div style="text-align:center"></divstyle>
+      <h2
+        style="color: darkred;"
+        th:text="Soda"
+      ></h2>
+    </div>
+
+    <div style="text-align: center">
+      <th:block th:each="food : ${food}">
+        <span th:if="${food.type == 'Drink'}">
+          <div style="padding: 2rem; display: inline-block; position: relative">
+              <img
+                th:src="${food.image}"
+                th:alt="${food.name}"
+                width="172.5"
+                height="255"
+                class="pic"
+              />
+              <h3 class="hide" th:text="${food.description}"></h3>
+              <h3
+                style="color: darkred;"
+                th:text="${food.name}"
+              ></h3>
+              <h3
+                style="color: darkred;"
+                th:text="€ + ${food.price}"
+              ></h3>
+          </div>
+      </span>
+      </th:block>
+    </div>
+
+    <div style="text-align:center"></divstyle>
+      <h2
+        style="color: darkred;"
+        th:text="Beer"
+      ></h2>
+    </div>
+
+    <div style="text-align: center">
+      <th:block th:each="food : ${food}">
+        <span th:if="${food.type == 'Beer'}">
+          <div style="padding: 2rem; display: inline-block; position: relative">
+              <img
+                th:src="${food.image}"
+                th:alt="${food.name}"
+                width="172.5"
+                height="255"
+                class="pic"
+              />
+              <h3 class="hide" th:text="${food.description}"></h3>
+              <h3
+                style="color: darkred;"
+                th:text="${food.name}"
+              ></h3>
+              <h3
+                style="color: darkred;"
+                th:text="€ + ${food.price}"
+              ></h3>
+          </div>
+      </span>
       </th:block>
     </div>
 

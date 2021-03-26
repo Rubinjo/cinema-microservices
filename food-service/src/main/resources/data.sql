@@ -1,5 +1,10 @@
-INSERT INTO food (id, name, description, image, price) VALUES
-        (1, 'Popcorn mini (sweet)', 'Taste the sweetest popcorn!!! Now special for the small eaters!!!', 'https://raw.githubusercontent.com/Rubinjo/cinema_microservices/main/resources/Baby_groot_with_popcorn.jpg', 2.95),
-        (2, 'Popcorn medi (sweet)', 'Taste the sweetest popcorn!!! Now tastefully popped for all!!!', 'https://raw.githubusercontent.com/Rubinjo/cinema_microservices/main/resources/Teenage_groot_with_popcorn.jpg', 4.45),
-        (3, 'Popcorn maxi (sweet)', 'Taste the sweetest popcorn!!! Now in extremely large bucket!!!', 'https://raw.githubusercontent.com/Rubinjo/cinema_microservices/main/resources/Groot_with_popcorn.jpg', 5.95);
-        
+INSERT INTO food (id, name, description, image, price, type) VALUES
+        (1, 'Popcorn mini (sweet)', 'Taste the sweetest popcorn!!! Now special for the small eaters!!!', 'https://raw.githubusercontent.com/Rubinjo/cinema_microservices/main/resources/Baby_groot_with_popcorn.jpg', 2.95, 'Popcorn'),
+        (2, 'Popcorn medi (sweet)', 'Taste the sweetest popcorn!!! Now tastefully popped for all!!!', 'https://raw.githubusercontent.com/Rubinjo/cinema_microservices/main/resources/Teenage_groot_with_popcorn.jpg', 4.45, 'Popcorn'),
+        (3, 'Popcorn maxi (sweet)', 'Taste the sweetest popcorn!!! Now in extremely large bucket!!!', 'https://raw.githubusercontent.com/Rubinjo/cinema_microservices/main/resources/Groot_with_popcorn.jpg', 5.95, 'Popcorn'),
+        (4, 'Coca Cola mini', 'Stay alert to outsmart all those theorists that try to destory your movie experience!!!', 'https://target.scene7.com/is/image/Target/GUEST_0a6df736-e5ad-48ee-bda5-91e8b17021ee?wid=488&hei=488&fmt=pjpeg', 1.95, 'Drink'),
+        (5, 'Coca Cola medi', 'Stay alert to outsmart all those theorists that try to destory your movie experience!!!', 'https://target.scene7.com/is/image/Target/GUEST_0a6df736-e5ad-48ee-bda5-91e8b17021ee?wid=488&hei=488&fmt=pjpeg', 2.95, 'Drink'),
+        (6, 'Coca Cola maxi', 'Stay alert to outsmart all those theorists that try to destory your movie experience!!!', 'https://target.scene7.com/is/image/Target/GUEST_0a6df736-e5ad-48ee-bda5-91e8b17021ee?wid=488&hei=488&fmt=pjpeg', 3.95, 'Drink'),
+        (7, 'Grolsch 45cl', 'Enrich your movie experience with the amazing taste after PLOP', 'https://media.foox.nl/FT/AFB/high/38292.jpg', 3.95, 'Beer'),
+        (8, 'Grimbergen Blond', 'Grimbergen Blond for the taste sensation enthusiasts', 'https://static.ah.nl/static/product/AHI_43545239363538303138_2_LowRes_JPG.JPG?options=399,q85', 4.50, 'Beer'),
+        (9, 'Tripel Karmeliet', 'Triple Karmeliet for the real diehards', 'https://www.bierwebshop.be/wp-content/uploads/2019/04/tripel-karmeliet-brouwerij-bosteels-bierwebshop.jpg', 3.95, 'Beer');
