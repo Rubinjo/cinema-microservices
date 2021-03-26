@@ -83,7 +83,7 @@ public class MovieRestController {
     }
 
 	@GetMapping("/{id}")
-    public ModelAndView showMovie(@CookieValue(value = "jwt") String jwt, @PathVariable Long id, Model model) {
+    public ModelAndView showMovie(@CookieValue(value = "jwt", required = false) String jwt, @PathVariable Long id, Model model) {
         // Check if movie exists
         Optional <Movie> potMovie = this.movieRepository.findById(id);
         if (!potMovie.isPresent()) {
