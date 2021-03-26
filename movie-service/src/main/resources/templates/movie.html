@@ -118,10 +118,79 @@
             <button
               type="button"
               class="btn btn-warning btn-lg fw-bold float-end"
+              data-bs-toggle="modal"
+              data-bs-target="#reserveModal"
               style="color: white"
             >
               Reserve Ticket
             </button>
+            <div
+              class="modal fade"
+              id="reserveModal"
+              tabindex="-1"
+              aria-labelledby="modalLabel"
+              aria-hidden="true"
+            >
+              <div class="modal-dialog">
+                <div class="modal-content bg-dark">
+                  <div class="modal-header">
+                    <h5 class="modal-title" id="modalLabel">
+                      Reserve your tickets
+                    </h5>
+                    <button
+                      type="button"
+                      class="btn-close btn-close-white"
+                      data-bs-dismiss="modal"
+                      aria-label="Close"
+                    ></button>
+                  </div>
+                  <div class="modal-body">
+                    <form id="reserveForm" method="POST" action="/reservation">
+                      <label class="form-label" for="numTickets"
+                        >Tickets:
+                      </label>
+                      <input
+                        style="display: block; width: 60%"
+                        class="form-control"
+                        type="number"
+                        name="numTickets"
+                        id="numTickets"
+                        min="1"
+                        value="1"
+                        required
+                      />
+                      <label class="form-label" for="email">Email: </label>
+                      <input
+                        style="display: block"
+                        class="form-control"
+                        type="email"
+                        name="email"
+                        id="email"
+                        required
+                      />
+                    </form>
+                  </div>
+                  <div class="modal-footer">
+                    <button
+                      type="button"
+                      class="btn btn-danger"
+                      data-bs-dismiss="modal"
+                    >
+                      Close
+                    </button>
+                    <input
+                      style="color: white"
+                      class="btn btn-warning"
+                      type="submit"
+                      form="reserveForm"
+                      value="Reserve"
+                    >
+                      Reserve
+                  </input>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
         <div style="min-height: 34.6rem" class="col-3 bg-dark py-5">

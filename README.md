@@ -17,3 +17,4 @@ This project was executed as a school assignment at the University of Twente.
 - Authentication Service
 - Movie Service
 - Food Service
+- Reservation service

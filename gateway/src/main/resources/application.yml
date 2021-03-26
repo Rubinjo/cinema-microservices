@@ -36,3 +36,7 @@ zuul:
       path: /food/**
       sensitiveHeaders: Set-Cookie, Authorization
       stripPrefix: false
+    reserve:
+      path: /reservation/**
+      sensitiveHeaders: Cookie, Set-Cookie, Authorization
+      stripPrefix: false
