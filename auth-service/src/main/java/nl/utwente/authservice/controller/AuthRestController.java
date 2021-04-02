@@ -1,6 +1,5 @@
 package nl.utwente.authservice.controller;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -9,7 +8,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -39,20 +37,6 @@ public class AuthRestController {
         response.put("Access", "OK");
         return response;
     }
-
-    // @RequestMapping("/authenticate/account/new")
-    // public Map<String, String> newAccount(@RequestBody AuthenticationRequest authenticationRequest) {
-    //     HashMap<String, String> response = new HashMap<>();
-    //     try {
-    //         UserDetails user = new User(authenticationRequest.getUsername(), authenticationRequest.getPassword(), new ArrayList<>());
-    //         // userDetailsManager.createUser(user);
-    //         response.put("Access", "OK");
-    //     } catch(Exception e) {
-    //         response.put("Access", "FAILED");
-    //     }
-        
-    //     return response;
-    // }
 
     @RequestMapping(value="/authenticate/account/login", method=RequestMethod.POST)
     public ResponseEntity<?> createAuthenticationToken(@RequestBody AuthenticationRequest authenticationRequest) throws Exception {
