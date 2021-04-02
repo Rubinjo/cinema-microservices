@@ -1,0 +1,47 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: ingress
+  annotations:
+    nginx.ingress.kubernetes.io/affinity: "cookie"
+    nginx.ingress.kubernetes.io/session-cookie-samesite: None
+spec:
+  rules:
+    - host: cinetopia.ut
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: home
+                port:
+                  number: 8083
+          - path: /movies
+            pathType: Prefix
+            backend:
+              service:
+                name: movie
+                port:
+                  number: 8081
+          - path: /food
+            pathType: Prefix
+            backend:
+              service:
+                name: food
+                port:
+                  number: 8084
+          - path: /authenticate
+            pathType: Prefix
+            backend:
+              service:
+                name: auth
+                port:
+                  number: 8085
+          - path: /reservation
+            pathType: Prefix
+            backend:
+              service:
+                name: reserve
+                port:
+                  number: 8082
