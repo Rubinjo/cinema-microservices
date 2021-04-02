@@ -4,6 +4,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.io.BufferedReader;
@@ -17,16 +18,19 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.codehaus.jettison.json.JSONObject;
 import org.springframework.ui.Model;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import org.springframework.web.servlet.view.RedirectView;
 
 @RestController
 @RequestMapping("/")
 public class HomeRestController {
 
     @GetMapping
-    public ModelAndView home(@CookieValue(value = "jwt", required = false) String jwt, Model model) {
+    public ModelAndView home(@RequestHeader String host, @CookieValue(value = "jwt", required = false) String jwt, Model model) {
         // Add attribute if logged in
-        if (jwt != null && checkLogin(jwt)) {
+        if (jwt != null && checkLogin(host, jwt)) {
             model.addAttribute("login", true);
         }
         ModelAndView modelAndView = new ModelAndView("home");
@@ -41,8 +45,11 @@ public class HomeRestController {
 
     // Redirect not working
     @PostMapping
-    public ModelAndView authenticate(HttpServletResponse response, String username, String password, Model model) {
-        String urlString = "http://localhost:8080/authenticate/account/login";
+    public ModelAndView authenticate(HttpServletResponse response, @RequestHeader String host, String username, String password, ModelMap model) {
+        String urlString = "http://cinetopia.ut/authenticate/account/login";
+        if (host.contains("host.docker.internal")) {
+            urlString = "http://localhost:8080/authenticate/account/login";
+        }
         HttpURLConnection con = null;
         try {
             // Setup outgoing request
@@ -91,22 +98,23 @@ public class HomeRestController {
                 con.disconnect();
             }
         }
-        ModelAndView modelAndView = new ModelAndView("home");
-        return modelAndView;
+        return new ModelAndView("redirect:/", model);
     }
 
     // Redirect not working
     @PostMapping("/logout")
-    public ModelAndView logout(HttpServletResponse response, Model model) {
+    public ModelAndView logout(HttpServletResponse response, ModelMap model) {
         Cookie cookie = new Cookie("jwt", "");
         cookie.setMaxAge(0);
         response.addCookie(cookie);
-        ModelAndView modelAndView = new ModelAndView("home");
-        return modelAndView;
+        return new ModelAndView("redirect:/", model);
     }
 
-    private boolean checkLogin(String jwt) {
-        String urlString = "http://localhost:8080/authenticate/check";
+    private boolean checkLogin(String host, String jwt) {
+        String urlString = "http://cinetopia.ut/authenticate/check";
+        if (host.contains("host.docker.internal")) {
+            urlString = "http://localhost:8080/authenticate/check";
+        }
         String response = "";
         // Manual HTTP GET request
         HttpURLConnection con = null;

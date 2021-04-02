@@ -15,12 +15,14 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import org.springframework.ui.ModelMap;
 
 import java.io.InputStreamReader;
 
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 
 import nl.utwente.foodservice.entities.Food;
 import nl.utwente.foodservice.repositories.FoodRepository;
@@ -36,43 +38,45 @@ public class FoodRestController {
     }
 
     @GetMapping
-    public ModelAndView showFood(@CookieValue(value = "jwt", required = false) String jwt, Model model) {
+    public ModelAndView showFood(@RequestHeader String host, @CookieValue(value = "jwt", required = false) String jwt, Model model) {
 		ModelAndView modelAndView = new ModelAndView("food");
         model.addAttribute("food", this.foodRepository.findAll());
         // Add attribute if logged in
-        if (jwt != null && checkLogin(jwt)) {
+        if (jwt != null && checkLogin(host, jwt)) {
             model.addAttribute("login", true);
         }
         return modelAndView;
     }
 
 	@GetMapping("/new")
-    public ModelAndView newFood(@CookieValue(value = "jwt", required = false) String jwt, Model model) {
+    public ModelAndView newFood(@RequestHeader String host, @CookieValue(value = "jwt", required = false) String jwt, Model model) {
         ModelAndView modelAndView = new ModelAndView("new_food_form");
         model.addAttribute("food", new Food());
         // Add attribute if logged in
-        if (jwt != null && checkLogin(jwt)) {
+        if (jwt != null && checkLogin(host, jwt)) {
             model.addAttribute("login", true);
         }
         return modelAndView;
     }
 
     @PostMapping
-    public ModelAndView newFood(@CookieValue(value = "jwt") String jwt, Food food, Model model) {
+    public ModelAndView newFood(@RequestHeader String host, @CookieValue(value = "jwt") String jwt, Food food, ModelMap model) {
         // Check required fields server side
         // Check if authorized
-        if (food.getName() == null || food.getDescription() == null || food.getImage() == null || food.getPrice() == null || food.getType() == null || checkLogin(jwt) == false) {
+        if (food.getName() == null || food.getDescription() == null || food.getImage() == null || food.getPrice() == null || food.getType() == null || checkLogin(host, jwt) == false) {
             // Needs to be added
         }
         // Save food
         this.foodRepository.save(food);
         
-        ModelAndView modelAndView = new ModelAndView("new_food_form");
-        return modelAndView;
+        return new ModelAndView("redirect:/food/new", model);
     }
 
-    private boolean checkLogin(String jwt) {
-        String urlString = "http://localhost:8080/authenticate/check";
+    private boolean checkLogin(String host, String jwt) {
+        String urlString = "http://cinetopia.ut/authenticate/check";
+        if (host.contains("host.docker.internal")) {
+            urlString = "http://localhost:8080/authenticate/check";
+        }
         String response = "";
         // Manual HTTP GET request
         HttpURLConnection con = null;

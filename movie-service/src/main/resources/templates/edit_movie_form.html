@@ -11,20 +11,20 @@
       crossorigin="anonymous"
     />
     <link
-      hfref="https://gitcdn.link/repo/Rubinjo/cinema_microservices/main/resources/css/color.css"
+      href="https://gitcdn.link/repo/Rubinjo/cinema_microservices/main/resources/css/color.css"
       rel="stylesheet"
       crossorigin="anonymous"
     />
-    <title>New Food</title>
+    <title>New Movie</title>
   </head>
   <body style="background-color: #0c0c0c">
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
       <div class="container-fluid" style="margin-left: 8%; margin-right: 8%">
         <a class="navbar-brand" href="/">
           <img
-            style="max-height: 2em"
+            style="max-height: 2.5rem"
             class="h-100"
-            src="logo.png"
+            src="/logo.png"
             alt="Cinema"
           />
         </a>
@@ -42,7 +42,7 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
           <ul class="navbar-nav me-auto mb-2 mb-lg-0">
             <li class="nav-item">
-              <a class="nav-link" href="/movies">movies</a>
+              <a class="nav-link" href="/movies">Movies</a>
             </li>
             <li class="nav-item">
               <a class="nav-link" href="/food">Menu</a>
@@ -72,27 +72,21 @@
                 class="dropdown-menu"
                 aria-labelledby="navbarDropdownMenuLink"
               >
-                <li><a class="dropdown-item" href="#">Logout</a></li>
+                <li>
+                  <a
+                    onclick="document.getElementById('logout-form').submit();"
+                    class="dropdown-item"
+                    style="cursor: pointer"
+                    >Logout</a
+                  >
+                  <form id="logout-form" action="/logout" method="POST"></form>
+                </li>
               </ul>
             </li>
           </ul>
         </div>
       </div>
     </nav>
-    <div
-      class="alert alert-success alert-dismissible fade show"
-      role="alert"
-      style="margin: auto; width: 60%; margin-top: 2%"
-      th:if="${submitted}"
-    >
-      The food has been submitted.
-      <button
-        type="button"
-        class="btn-close"
-        data-bs-dismiss="alert"
-        aria-label="Close"
-      ></button>
-    </div>
 
     <div
       class="card bg-dark"
@@ -102,27 +96,28 @@
         max-width: 1280px;
         margin: auto;
         margin-top: 5%;
+        margin-bottom: 5%;
         padding: 2rem;
       "
     >
-      <p class="fs-1 fw-bold">New Food</p>
-      <form method="POST" action="/food" th:object="${food}">
+      <p class="fs-1 fw-bold">Edit Movie</p>
+      <form id="editForm" th:movieId="${movie.id}" th:object="${movie}">
         <div class="mb-3">
-          <label for="nameFood" class="form-label">Name*</label>
+          <label for="nameMovie" class="form-label">Name*</label>
           <input
             type="text"
             class="form-control"
-            id="nameFood"
+            id="nameMovie"
             th:field="*{name}"
             required
           />
         </div>
         <div class="mb-3">
-          <label for="descriptionFood" class="form-label">Description*</label>
+          <label for="descriptionMovie" class="form-label">Description*</label>
           <input
             type="text"
             class="form-control"
-            id="descriptionFood"
+            id="descriptionMovie"
             th:field="*{description}"
             required
           />
@@ -138,37 +133,94 @@
           />
         </div>
         <div class="mb-3">
-          <label for="foodPrice" class="form-label">Food price*</label>
+          <label for="trailerUrl" class="form-label"
+            >Trailer url (Embedded link)</label
+          >
           <input
-            type="text"
+            type="url"
             class="form-control"
-            id="foodPrice"
-            th:field="*{price}"
-            required
+            id="trailerUrl"
+            th:field="*{trailer}"
           />
         </div>
         <div class="mb-3">
-          <label for="foodType" class="form-label">Food Type*</label>
-          <select
-            id="foodType"
-            class="form-select"
-            aria-label="Select food type"
-            th:field="*{type}"
-            required
-          >
-            <option value="Popcorn">Popcorn</option>
-            <option value="Drink">Drink</option>
-            <option value="Beer">Beer</option>
-          </select>
+          <label for="duration" class="form-label">Duration</label>
+          <input
+            type="number"
+            class="form-control"
+            id="duration"
+            th:field="*{duration}"
+          />
         </div>
-        <button type="submit" class="btn btn-warning">Submit</button>
+        <div class="mb-3">
+          <label for="genre" class="form-label"
+            >Genre(s) (Splitted by a comma)</label
+          >
+          <input
+            type="text"
+            class="form-control"
+            id="genre"
+            th:field="*{genre}"
+          />
+        </div>
+        <div class="mb-3">
+          <label for="actors" class="form-label"
+            >Actors(s) (Splitted by a comma)</label
+          >
+          <input
+            type="text"
+            class="form-control"
+            id="actors"
+            th:field="*{actors}"
+          />
+        </div>
+        <div class="mb-3">
+          <label for="directors" class="form-label"
+            >Director(s) (Splitted by a comma)</label
+          >
+          <input
+            type="text"
+            class="form-control"
+            id="directors"
+            th:field="*{director}"
+          />
+        </div>
+        <div class="mb-3">
+          <label for="releaseDate" class="form-label">Release Date*</label>
+          <input
+            type="date"
+            class="form-control"
+            id="releaseDate"
+            th:field="*{release}"
+            required
+          />
+        </div>
+        <button type="submit" class="btn btn-warning">Edit</button>
       </form>
     </div>
-
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script
       src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js"
       integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0"
       crossorigin="anonymous"
     ></script>
+    <script>
+      $("#editForm").submit(function (event) {
+        event.preventDefault();
+        var data = $("#editForm").serialize();
+        var id = $(this).attr("movieId");
+        $.ajax({
+          url: "/movies/" + id,
+          method: "PUT",
+          data: data,
+          error: function (response) {
+            window.location = "/movies/" + id;
+          },
+          complete: function (response) {
+            window.location = "/movies";
+          },
+        });
+      });
+    </script>
   </body>
 </html>
