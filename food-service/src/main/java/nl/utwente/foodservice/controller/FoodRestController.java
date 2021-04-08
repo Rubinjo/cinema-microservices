@@ -6,9 +6,12 @@ import java.io.BufferedReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.time.LocalDate;
+import java.util.Optional;
 
+import org.springframework.http.ResponseEntity;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.CookieValue;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -71,6 +74,58 @@ public class FoodRestController {
         
         return new ModelAndView("redirect:/food/new", model);
     }
+
+    @GetMapping("/{id}/edit")
+    public ModelAndView editFood(@RequestHeader String host, @CookieValue(value = "jwt", required = false) String jwt, @PathVariable Long id, Model model, ModelMap remodel) {
+        Optional <Food> potFood = this.foodRepository.findById(id);
+        if (!potFood.isPresent()) {
+            // Redirect to all food page
+            remodel.addAttribute("e", "notfound");
+            return new ModelAndView("redirect:/food", remodel);
+        }
+        Food food = potFood.get();
+        model.addAttribute("food", food);
+        // Add attribute if logged in
+        if (jwt != null && checkLogin(host, jwt)) {
+            model.addAttribute("login", true);
+        }
+        ModelAndView modelAndView = new ModelAndView("edit_food_form");
+        return modelAndView;
+    }
+
+    //Redirect managed through JQuery AJAX
+	@PutMapping("/{id}")
+	public ResponseEntity editMovie(@RequestHeader String host, @CookieValue(value = "jwt") String jwt, @PathVariable Long id, Food food) {
+		// Check if movie exists
+        // Check if authorized
+        // Check required fields server side
+        Optional <Food> potFood = this.foodRepository.findById(id);
+        if (!potFood.isPresent() || checkLogin(host, jwt) == false || food.getId() != potFood.get().getId() || food.getName() == null || food.getDescription() == null || food.getImage() == null || food.getPrice() == null || food.getType() == null) {
+            // Redirect to all movies page
+            return ResponseEntity.badRequest().build();
+        }
+        // Automatically overwrites movie with same id
+        this.foodRepository.save(food);
+
+        return ResponseEntity.ok().build();
+	}
+
+    //Redirect managed through JQuery AJAX
+	@DeleteMapping("/{id}")
+	public ResponseEntity deleteFood(@RequestHeader String host, @CookieValue(value = "jwt") String jwt, @PathVariable Long id) {
+		// Check if movie exists
+        // Check if authorized
+        Optional <Food> potFood = this.foodRepository.findById(id);
+        if (!potFood.isPresent() || checkLogin(host, jwt) == false) {
+            // Redirect to all movies page
+            return ResponseEntity.badRequest().build();
+        }
+        Food food = potFood.get();
+
+        this.foodRepository.delete(food);
+
+        return ResponseEntity.ok().build();
+	}
 
     private boolean checkLogin(String host, String jwt) {
         String urlString = "http://cinetopia.ut/authenticate/check";

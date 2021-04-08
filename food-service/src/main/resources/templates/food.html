@@ -88,18 +88,35 @@
       </div>
     </nav>
 
+    <div
+      class="alert alert-danger alert-dismissible fade show"
+      role="alert"
+      style="margin: auto; width: 60%; margin-top: 2%"
+      th:if="${e} == 'notfound'"
+    >
+      This food item does not exist.
+      <button
+        type="button"
+        class="btn-close"
+        data-bs-dismiss="alert"
+        aria-label="Close"
+      ></button>
+    </div>
+
+    <div style="text-align: center; margin: 2rem" th:if="${login}">
+      <a href="/food/new" class="btn btn-success">+ Add Food</a>
+    </div>
+
     <div style="text-align:center"></divstyle>
       <h1
         style="color: darkred;"
-        th:text="Menu"
-      ></h1>
+      >Menu</h1>
     </div>
 
     <div style="text-align:center"></divstyle>
       <h2
         style="color: darkred;"
-        th:text="Popcorn"
-      ></h2>
+      >Popcorn</h2>
     </div>
 
     <div style="text-align: center">
@@ -122,6 +139,10 @@
                 style="color: darkred;"
                 th:text="€ + ${#numbers.formatDecimal(food.price, 0, 'COMMA', 2, 'POINT')}"
               ></h3>
+              <div th:if="${login}">
+                <button style="margin-bottom: 1rem;" type="button" class="btn btn-danger" th:onclick="'makeDELETErequest(' + ${food.id} + ')'">DELETE</button>
+                <a style="color: white; margin-bottom: 1rem;" type="button" class="btn btn-warning" th:href="'/food/' + ${food.id} + '/edit'">EDIT</a>
+              </div>
           </div>
       </span>
       </th:block>
@@ -130,8 +151,7 @@
     <div style="text-align:center"></divstyle>
       <h2
         style="color: darkred;"
-        th:text="Soda"
-      ></h2>
+      >Soda</h2>
     </div>
 
     <div style="text-align: center">
@@ -154,6 +174,10 @@
                 style="color: darkred;"
                 th:text="€ + ${food.price}"
               ></h3>
+              <div th:if="${login}">
+                <button style="margin-bottom: 1rem;" type="button" class="btn btn-danger" th:onclick="'makeDELETErequest(' + ${food.id} + ')'">DELETE</button>
+                <a style="color: white; margin-bottom: 1rem;" type="button" class="btn btn-warning" th:href="'/food/' + ${food.id} + '/edit'">EDIT</a>
+              </div>
           </div>
       </span>
       </th:block>
@@ -162,8 +186,7 @@
     <div style="text-align:center"></divstyle>
       <h2
         style="color: darkred;"
-        th:text="Beer"
-      ></h2>
+      >Beer</h2>
     </div>
 
     <div style="text-align: center">
@@ -186,15 +209,33 @@
                 style="color: darkred;"
                 th:text="€ + ${food.price}"
               ></h3>
+              <div th:if="${login}">
+                <button style="margin-bottom: 1rem;" type="button" class="btn btn-danger" th:onclick="'makeDELETErequest(' + ${food.id} + ')'">DELETE</button>
+                <a style="color: white; margin-bottom: 1rem;" type="button" class="btn btn-warning" th:href="'/food/' + ${food.id} + '/edit'">EDIT</a>
+              </div>
           </div>
       </span>
       </th:block>
     </div>
-
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script
       src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js"
       integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0"
       crossorigin="anonymous"
     ></script>
+    <script>
+      function makeDELETErequest(id) {
+        $.ajax({
+          url: '/food/' + id,
+          method: 'DELETE',
+          error: function(response) {
+            window.location = '/food/' + id;
+          },
+          complete: function(response) {
+            window.location = '/food';
+          }
+        });
+      }
+    </script>
   </body>
 </html>

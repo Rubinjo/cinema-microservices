@@ -102,6 +102,10 @@
       ></button>
     </div>
 
+    <div style="text-align: center; margin: 2rem" th:if="${login}">
+      <a href="/movies/new" class="btn btn-success">+ Add Movie</a>
+    </div>
+
     <div style="text-align: center">
       <th:block th:each="movie : ${movie}">
         <div style="padding: 2rem; display: inline-block; position: relative">
