@@ -19,7 +19,7 @@ This project was executed as a school assignment at the University of Twente. Th
 - Food Service
 - Reservation service
 
-## Setup
+## Setup (`for Windows`)
 
 ### Locally
 
@@ -28,18 +28,35 @@ This project was executed as a school assignment at the University of Twente. Th
 cd cinema_microservices
 setupLocal.sh
 ```
-2. (Optionally) Open the Eureka server by going to: 
+2. (Optionally) Open the Eureka server 
 ```
 https://localhost:8761
 ```
-3. Navigate through the website by going to:
+3. Navigate through the website on port 8080
 ```
 https://localhost:8080
 ```
 
-### Containerized
+### Containerized (`for Minikube`)
 
-Work in progress
+1. Run setupContainer.sh
+```
+cd cinema_microservices
+setupContainer.sh
+```
+2. (Optionally) Open the Minikube dashboard
+```
+minikube dashboard
+```
+3. Get the Minikube ip address
+```
+minikube ip
+```
+4. Add the found minikube ip and the domain name cinetopia.ut to your /etc/hosts file:
+```
+minikubeIp cinetopia.ut
+```
+5. Navigate through the website on cinetopia.ut
 
 ## Shup down
 
