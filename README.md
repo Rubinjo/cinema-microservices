@@ -21,42 +21,46 @@ This project was executed as a school assignment at the University of Twente. Th
 
 ## Setup (`for Windows`)
 
+1. Setup your own email-client for the reservation service by editing the [application.properties](https://github.com/Rubinjo/cinema_microservices/blob/main/reserve-service/src/main/resources/application.properties) of this service (without this step the service will not work, but others will still function)
+
 ### Locally
 
-1. Run setupLocal.sh (wait for all services to boot up)
+2. Run setupLocal.sh (wait for all services to boot up)
 ```
 cd cinema_microservices
 setupLocal.sh
 ```
-2. (Optionally) Open the Eureka server 
+3. (Optionally) Open the Eureka server 
 ```
 https://localhost:8761
 ```
-3. Navigate through the website on port 8080
+4. Navigate through the website on port 8080
 ```
 https://localhost:8080
 ```
 
 ### Containerized (`for Minikube`)
 
-1. Run setupContainer.sh
+The containerized setup will create (and delete) a completely new Minikube cluster. If you already have a cluster running you first have to delete this to get the setup to work. The services can also be implement on an existing cluster, however these steps are not provided here.
+
+2. Run setupContainer.sh
 ```
 cd cinema_microservices
 setupContainer.sh
 ```
-2. (Optionally) Open the Minikube dashboard
+3. (Optionally) Open the Minikube dashboard
 ```
 minikube dashboard
 ```
-3. Get the Minikube ip address
+4. Get the Minikube ip address
 ```
 minikube ip
 ```
-4. Add the found minikube ip and the domain name cinetopia.ut to your /etc/hosts file:
+5. Add the found minikube ip and the domain name cinetopia.ut to your /etc/hosts file:
 ```
 minikubeIp cinetopia.ut
 ```
-5. Navigate through the website on cinetopia.ut
+6. Navigate through the website on cinetopia.ut
 
 ## Shup down
 
@@ -66,4 +70,11 @@ minikubeIp cinetopia.ut
 
 ### Containerized
 
-Work in progress
+1. Stop Minikube
+```
+minikube stop
+```
+2. Delete the Minikube cluster
+```
+minikube delete
+```
