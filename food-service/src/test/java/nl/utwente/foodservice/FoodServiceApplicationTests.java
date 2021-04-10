@@ -1,4 +1,4 @@
-package nl.utwente.movieservice;
+package nl.utwente.foodservice;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
@@ -12,40 +12,40 @@ import org.springframework.test.web.servlet.RequestBuilder;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
-import nl.utwente.movieservice.controller.MovieRestController;
-import nl.utwente.movieservice.repositories.MovieRepository;
-import nl.utwente.movieservice.entities.Movie;
+import nl.utwente.foodservice.controller.FoodRestController;
+import nl.utwente.foodservice.repositories.FoodRepository;
+import nl.utwente.foodservice.entities.Food;
 import org.mockito.Mockito;
 
 
 @ExtendWith(SpringExtension.class)
-@WebMvcTest(MovieRestController.class)
-class MovieServiceApplicationTests {
+@WebMvcTest(FoodRestController.class)
+class FoodServiceApplicationTests {
     
     @MockBean
-    private MovieRepository movieMockRepository;
+    private FoodRepository foodMockRepository;
     
     @Autowired
     private MockMvc mvc;
 
     @Test
-    void restCheckMovies() throws Exception {
-        // Send http request to /movies
-        RequestBuilder request = MockMvcRequestBuilders.get("/movies").header("host", "localhost");
+    void restCheckFood() throws Exception {
+        // Send http request to /food
+        RequestBuilder request = MockMvcRequestBuilders.get("/food").header("host", "localhost");
         MvcResult result = mvc.perform(request).andReturn();
         // Check if html page gets returned
         assertEquals("text/html;charset=UTF-8", result.getResponse().getContentType());
     }
     
     @Test
-    void entityCheckMovie() throws Exception {
-        Movie movie = new Movie();
-        movie.setId(1L);
-        Mockito.when(this.movieMockRepository.save(movie)).thenReturn(movie);
-        Movie newMovie = this.movieMockRepository.save(movie);
-        // Check if saved movie corrosponds to created movie
-        assertEquals(movie, newMovie);
+    void entityCheckFood() throws Exception {
+        Food food = new Food();
+        food.setId(1L);
+        Mockito.when(this.foodMockRepository.save(food)).thenReturn(food);
+        Food newFood = this.foodMockRepository.save(food);
+        // Check if saved food corrosponds to created food
+        assertEquals(food, newFood);
         // Check if method has been called
-        Mockito.verify(this.movieMockRepository).save(movie);
+        Mockito.verify(this.foodMockRepository).save(food);
     }
 }
