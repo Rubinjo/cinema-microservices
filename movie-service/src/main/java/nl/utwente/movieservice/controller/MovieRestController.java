@@ -88,7 +88,6 @@ public class MovieRestController {
         }
         // Save movie
         this.movieRepository.save(movie);
-
         model.addAttribute("submitted", true);
         return new ModelAndView("redirect:/movies/new", model);
     }

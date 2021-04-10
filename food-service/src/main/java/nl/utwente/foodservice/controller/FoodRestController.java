@@ -43,6 +43,7 @@ public class FoodRestController {
     @GetMapping
     public ModelAndView showFood(@RequestHeader String host, @CookieValue(value = "jwt", required = false) String jwt, Model model) {
 		ModelAndView modelAndView = new ModelAndView("food");
+        // Add all food objects from repository
         model.addAttribute("food", this.foodRepository.findAll());
         // Add attribute if logged in
         if (jwt != null && checkLogin(host, jwt)) {
@@ -54,6 +55,7 @@ public class FoodRestController {
     @GetMapping("/new")
     public ModelAndView newFood(@RequestHeader String host, @CookieValue(value = "jwt", required = false) String jwt, Model model) {
         ModelAndView modelAndView = new ModelAndView("new_food_form");
+        // Add new food object for creation
         model.addAttribute("food", new Food());
         // Add attribute if logged in
         if (jwt != null && checkLogin(host, jwt)) {
@@ -67,16 +69,19 @@ public class FoodRestController {
         // Check required fields server side
         // Check if authorized
         if (food.getName() == null || food.getDescription() == null || food.getImage() == null || food.getPrice() == null || food.getType() == null || checkLogin(host, jwt) == false) {
-            // Needs to be added
+            // Redirect to all food page
+            model.addAttribute("submitted", false);
+            return new ModelAndView("redirect:/food/new", model);
         }
         // Save food
         this.foodRepository.save(food);
-        
+        model.addAttribute("submitted", true);
         return new ModelAndView("redirect:/food/new", model);
     }
 
     @GetMapping("/{id}/edit")
     public ModelAndView editFood(@RequestHeader String host, @CookieValue(value = "jwt", required = false) String jwt, @PathVariable Long id, Model model, ModelMap remodel) {
+        // Check if food exists
         Optional <Food> potFood = this.foodRepository.findById(id);
         if (!potFood.isPresent()) {
             // Redirect to all food page
@@ -95,16 +100,16 @@ public class FoodRestController {
 
     //Redirect managed through JQuery AJAX
 	@PutMapping("/{id}")
-	public ResponseEntity editMovie(@RequestHeader String host, @CookieValue(value = "jwt") String jwt, @PathVariable Long id, Food food) {
-		// Check if movie exists
+	public ResponseEntity editFood(@RequestHeader String host, @CookieValue(value = "jwt") String jwt, @PathVariable Long id, Food food) {
+		// Check if food exists
         // Check if authorized
         // Check required fields server side
         Optional <Food> potFood = this.foodRepository.findById(id);
         if (!potFood.isPresent() || checkLogin(host, jwt) == false || food.getId() != potFood.get().getId() || food.getName() == null || food.getDescription() == null || food.getImage() == null || food.getPrice() == null || food.getType() == null) {
-            // Redirect to all movies page
+            // Redirect to all food page
             return ResponseEntity.badRequest().build();
         }
-        // Automatically overwrites movie with same id
+        // Automatically overwrites food with same id
         this.foodRepository.save(food);
 
         return ResponseEntity.ok().build();
@@ -113,11 +118,11 @@ public class FoodRestController {
     //Redirect managed through JQuery AJAX
 	@DeleteMapping("/{id}")
 	public ResponseEntity deleteFood(@RequestHeader String host, @CookieValue(value = "jwt") String jwt, @PathVariable Long id) {
-		// Check if movie exists
+		// Check if food exists
         // Check if authorized
         Optional <Food> potFood = this.foodRepository.findById(id);
         if (!potFood.isPresent() || checkLogin(host, jwt) == false) {
-            // Redirect to all movies page
+            // Redirect to all food page
             return ResponseEntity.badRequest().build();
         }
         Food food = potFood.get();

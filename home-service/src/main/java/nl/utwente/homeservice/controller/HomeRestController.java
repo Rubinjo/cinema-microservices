@@ -20,8 +20,6 @@ import org.codehaus.jettison.json.JSONObject;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-import org.springframework.web.servlet.view.RedirectView;
 
 @RestController
 @RequestMapping("/")
@@ -43,7 +41,6 @@ public class HomeRestController {
         return modelAndView;
     }
 
-    // Redirect not working
     @PostMapping
     public ModelAndView authenticate(HttpServletResponse response, @RequestHeader String host, String username, String password, ModelMap model) {
         String urlString = "http://cinetopia.ut/authenticate/account/login";
@@ -81,8 +78,6 @@ public class HomeRestController {
             }
             br.close();
             String jwt = sb.toString();
-            // System.out.println(jwt);
-            // System.out.println(jwt.substring(8, jwt.length() - 3));
             Cookie cookie = new Cookie("jwt", jwt.substring(8, jwt.length() - 3));
             cookie.setMaxAge(60 * 60 * 10);
             cookie.setHttpOnly(true);
@@ -101,10 +96,11 @@ public class HomeRestController {
         return new ModelAndView("redirect:/", model);
     }
 
-    // Redirect not working
     @PostMapping("/logout")
     public ModelAndView logout(HttpServletResponse response, ModelMap model) {
+        // Overwrite existing cookie
         Cookie cookie = new Cookie("jwt", "");
+        // Set max age to zero to delete
         cookie.setMaxAge(0);
         response.addCookie(cookie);
         return new ModelAndView("redirect:/", model);

@@ -95,6 +95,21 @@
     </div>
 
     <div
+      class="alert alert-danger alert-dismissible fade show"
+      role="alert"
+      style="margin: auto; width: 60%; margin-top: 2%"
+      th:if="${submitted} == 'false'"
+    >
+      Something went wrong, the movie has not been submitted.
+      <button
+        type="button"
+        class="btn-close"
+        data-bs-dismiss="alert"
+        aria-label="Close"
+      ></button>
+    </div>
+
+    <div
       class="card bg-dark"
       style="
         width: 75%;

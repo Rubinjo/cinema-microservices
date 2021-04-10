@@ -23,9 +23,9 @@ public class MailService {
 
         SimpleMailMessage mail = new SimpleMailMessage();
 		mail.setTo(email);
-		mail.setFrom("Cinema@gmail.com");
+		mail.setFrom("Cinetopia@gmail.com");
 		mail.setSubject("Reservation for Movie");
-		mail.setText("Thank you for your reservation by Cinema Utwente. The popcorn has already been popped and our staff is ready at your service.\n\nYou have reserved " + numTickets + " ticket(s).\n\n*This is an email from a sample cinema application, this mail is not intended for real use.\n\nWith kind regards,\nThe team of Cinema Utwente");
+		mail.setText("Thank you for your reservation by Cinetopia Utwente. The popcorn has already been popped and our staff is ready at your service.\n\nYou have reserved " + numTickets + " ticket(s).\n\n*This is an email from a sample cinema application, this mail is not intended for real use.\n\nWith kind regards,\nThe team of Cinema Utwente");
 		javaMailSender.send(mail);
 
 		System.out.println("Email Sent!");
