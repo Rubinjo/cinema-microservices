@@ -63,7 +63,7 @@ public class MovieRestController {
         return modelAndView;
     }
 
-	@GetMapping("/new")
+    @GetMapping("/new")
     public ModelAndView newMovieForm(@RequestHeader String host, @CookieValue(value = "jwt", required = false) String jwt, @RequestParam(value = "submitted", required = false) String submitted, Model model) {
         ModelAndView modelAndView = new ModelAndView("new_movie_form");
         model.addAttribute("movie", new Movie());
@@ -93,7 +93,7 @@ public class MovieRestController {
         return new ModelAndView("redirect:/movies/new", model);
     }
 
-	@GetMapping("/{id}")
+    @GetMapping("/{id}")
     public ModelAndView showMovie(@RequestHeader String host, @CookieValue(value = "jwt", required = false) String jwt, @PathVariable Long id, Model model, ModelMap remodel) {
         // Check if movie exists
         Optional <Movie> potMovie = this.movieRepository.findById(id);

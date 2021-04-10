@@ -51,7 +51,7 @@ public class FoodRestController {
         return modelAndView;
     }
 
-	@GetMapping("/new")
+    @GetMapping("/new")
     public ModelAndView newFood(@RequestHeader String host, @CookieValue(value = "jwt", required = false) String jwt, Model model) {
         ModelAndView modelAndView = new ModelAndView("new_food_form");
         model.addAttribute("food", new Food());
