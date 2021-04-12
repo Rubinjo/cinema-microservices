@@ -86,7 +86,7 @@ minikubeIp cinetopia.ut
 
 ### Locally
 
-1. Stop all process (CTRL+C) that were started by executing setupLocal.sh
+1. Stop all processes (CTRL+C) that were started by executing setupLocal.sh
 
 ### Containerized
 
