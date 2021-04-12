@@ -77,7 +77,6 @@ public class MovieRestController {
         return modelAndView;
     }
 
-    //Redirect not working
     @PostMapping
     public ModelAndView newMovie(@RequestHeader String host, @CookieValue(value = "jwt") String jwt, Movie movie, ModelMap model) {
         // Check required fields server side

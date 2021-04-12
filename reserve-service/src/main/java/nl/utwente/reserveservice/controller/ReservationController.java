@@ -1,7 +1,9 @@
 package nl.utwente.reserveservice.controller;
 
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.ModelAndView;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 
@@ -15,12 +17,12 @@ public class ReservationController {
 	private MailService mailService;
     
     @PostMapping
-    public String sendMail(Integer numTickets, String email) {
+    public ModelAndView sendMail(Integer numTickets, String email, ModelMap model) {
         try {
 			mailService.sendMail(numTickets, email);
 		}catch( Exception e ){
 			System.out.println("Error");
 		}
-        return "Finished";
+        return new ModelAndView("redirect:/movies", model);
     }
 }
