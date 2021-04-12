@@ -1,5 +1,17 @@
 # cinema_microservices
 
+<p align="center">
+  <a aria-label="cinema_microservices license" href="https://github.com/Rubinjo/cinema_microservices/blob/main/LICENSE" target="_blank">
+    <img alt="License: MIT" src="https://img.shields.io/badge/License-MIT-yellow.svg" target="_blank" />
+  </a>
+  <a aria-label="Gradle project" href="https://github.com/gradle/gradle" target="_blank">
+    <img alt="Runs with Gradle" src="https://img.shields.io/badge/gradle-6.8.3-blue.svg" target="_blank" />
+  </a>
+  <a aria-label="Spring Boot project" href="https://github.com/spring-projects/spring-boot" target="_blank">
+    <img alt="Runs with Gradle" src="https://img.shields.io/badge/spring--boot-2.3.10-green.svg" target="_blank" />
+  </a>
+</p>
+
 This project was executed as a school assignment at the University of Twente. The project consist of multiple microservices that work together to form the online business of a typical cinema:movie_camera:. The services are mainly build with [Spring Boot](https://github.com/spring-projects/spring-boot) as its backbone, which is supported by html and css for the front-end. The application has been build to work both locally and also containerized in [Kubernetes](https://github.com/kubernetes/kubernetes).
 
 ## Project Overview
@@ -18,6 +30,10 @@ This project was executed as a school assignment at the University of Twente. Th
 - Movie Service
 - Food Service
 - Reservation service
+
+<p align="center">
+  <img height="300" width="auto" src="resources/SOAarchitecture.jpg">
+</p>
 
 ## Setup (`for Windows`)
 
