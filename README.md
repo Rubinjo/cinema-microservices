@@ -37,9 +37,9 @@ This project was executed as a school assignment at the University of Twente. Th
 
 ## Setup (`for Windows`)
 
-1. Setup your own email-client for the reservation service by editing the [application.properties](https://github.com/Rubinjo/cinema_microservices/blob/main/reserve-service/src/main/resources/application.properties) of this service (without this step the service will not work, but others will still function)
-
 ### Locally
+
+1. Setup your own email-client for the reservation service by editing the [application.properties](https://github.com/Rubinjo/cinema_microservices/blob/main/reserve-service/src/main/resources/application.properties) of this service (without this step the service will not work, but others will still function)
 
 2. Run setupLocal.sh (wait for all services to boot up)
 ```
@@ -59,28 +59,28 @@ https://localhost:8080
 
 The containerized setup will create (and delete) a completely new Minikube cluster. If you already have a cluster running you first have to delete this to get the setup to work. The services can also be implement on an existing cluster, however these steps are not provided here.
 
-2. Run setupContainer.sh (wait for it to finish)
+1. Run setupContainer.sh (wait for it to finish)
 ```
 cd cinema_microservices
 setupContainer.sh
 ```
-3. Apply the ingress controller to the cluster
+2. Apply the ingress controller to the cluster
 ```
 kubectl apply -f ingress.yml
 ```
-4. (Optionally) Open the Minikube dashboard
+3. (Optionally) Open the Minikube dashboard
 ```
 minikube dashboard
 ```
-5. Get the Minikube ip address
+4. Get the Minikube ip address
 ```
 minikube ip
 ```
-6. Add the found minikube ip and the domain name cinetopia.ut to your /etc/hosts file:
+5. Add the found minikube ip and the domain name cinetopia.ut to your /etc/hosts file:
 ```
 minikubeIp cinetopia.ut
 ```
-7. Navigate through the website on cinetopia.ut
+6. Navigate through the website on cinetopia.ut
 
 ## Shup down
 
