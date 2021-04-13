@@ -8,7 +8,13 @@
     <img alt="Runs with Gradle" src="https://img.shields.io/badge/gradle-6.8.3-blue.svg" target="_blank" />
   </a>
   <a aria-label="Spring Boot project" href="https://github.com/spring-projects/spring-boot" target="_blank">
-    <img alt="Runs with Gradle" src="https://img.shields.io/badge/spring--boot-2.3.10-green.svg" target="_blank" />
+    <img alt="Uses Spring Boot" src="https://img.shields.io/badge/spring--boot-2.3.10-green.svg" target="_blank" />
+  </a>
+  <a aria-label="Java" href="https://github.com/openjdk/jdk" target="_blank">
+    <img alt="Runs with Java" src="https://img.shields.io/badge/java-11-red.svg" target="_blank" />
+  </a>
+  <a aria-label="Bootstrap" href="https://github.com/twbs/bootstrap" target="_blank">
+    <img alt="Uses Bootstrap" src="https://img.shields.io/badge/bootstrap-5.0.0--beta3-purple.svg" target="_blank" />
   </a>
 </p>
 
